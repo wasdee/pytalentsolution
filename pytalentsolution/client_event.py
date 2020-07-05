@@ -1,0 +1,1 @@
+"""https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/ClientEvent"""
