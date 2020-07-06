@@ -1,56 +1,273 @@
-"""https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs"""
+"""
+https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs
+"""
+from enum import auto
+from typing import List, Optional
+
 from pydantic import BaseModel
 
+from pytalentsolution.company import AutoName, Location
 
-class Job(BaseModel):
-    "name": string,
-    "company": string,
-    "requisitionId": string,
-    "title": string,
-    "description": string,
-    "addresses": [
-        string
-    ],
-    "applicationInfo": {
-        object(ApplicationInfo)
-    },
-    "jobBenefits": [
-        enum(JobBenefit)
-    ],
-    "compensationInfo": {
-        object(CompensationInfo)
-    },
-    "customAttributes": {
-        string: {
-            object(CustomAttribute)
-        },
-        ...
-    },
-    "degreeTypes": [
-        enum(DegreeType)
-    ],
-    "department": string,
-    "employmentTypes": [
-        enum(EmploymentType)
-    ],
-    "incentives": string,
-    "languageCode": string,
-    "jobLevel": enum(JobLevel),
-    "promotionValue": number,
-    "qualifications": string,
-    "responsibilities": string,
-    "postingRegion": enum(PostingRegion),
-    "visibility": enum(Visibility),
-    "jobStartTime": string,
-    "jobEndTime": string,
-    "postingPublishTime": string,
-    "postingExpireTime": string,
-    "postingCreateTime": string,
-    "postingUpdateTime": string,
-    "companyDisplayName": string,
-    "derivedInfo": {
-        object(DerivedInfo)
-    },
-    "processingOptions": {
-        object(ProcessingOptions)
-    }
+
+class ApplicationInfo(BaseModel):
+    """
+    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.ApplicationInfo
+    """
+    emails: Optional[List[str]]
+    instruction: Optional[str]
+    uris: Optional[List[str]]
+
+
+class JobBenefit(AutoName):
+    """
+    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.JobBenefit
+    """
+    JOB_BENEFIT_UNSPECIFIED = auto()
+    CHILD_CARE = auto()
+    DENTAL = auto()
+    DOMESTIC_PARTNER = auto()
+    FLEXIBLE_HOURS = auto()
+    MEDICAL = auto()
+    LIFE_INSURANCE = auto()
+    PARENTAL_LEAVE = auto()
+    RETIREMENT_PLAN = auto()
+    SICK_DAYS = auto()
+    VACATION = auto()
+    VISION = auto()
+
+
+class CompensationType(AutoName):
+    """
+    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.CompensationInfo
+    """
+    COMPENSATION_TYPE_UNSPECIFIED = auto()
+    BASE = auto()
+    BONUS = auto()
+    SIGNING_BONUS = auto()
+    EQUITY = auto()
+    PROFIT_SHARING = auto()
+    COMMISSIONS = auto()
+    TIPS = auto()
+    OTHER_COMPENSATION_TYPE = auto()
+
+
+class CompensationUnit(AutoName):
+    """
+    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.CompensationUnit
+    """
+    COMPENSATION_UNIT_UNSPECIFIED = auto()
+    HOURLY = auto()
+    DAILY = auto()
+    WEEKLY = auto()
+    MONTHLY = auto()
+    YEARLY = auto()
+    ONE_TIME = auto()
+    OTHER_COMPENSATION_UNIT = auto()
+
+
+class Money(BaseModel):
+    """
+    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.Money
+    """
+    currencyCode: Optional[str]
+    units: Optional[str]
+    nanos: Optional[int]
+
+
+class CompensationRange(BaseModel):
+    """
+    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.CompensationRange
+    """
+    maxCompensation: Optional[Money]
+    minCompensation: Optional[Money]
+
+
+class CompensationEntry(BaseModel):
+    """
+    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.CompensationEntry
+    """
+    type: Optional[CompensationType]
+    unit: Optional[CompensationUnit]
+    description: Optional[str]
+    expectedUnitsPerYear: Optional[int]
+
+    #Union field compensation_amount can be only one of the following:
+    amount: Optional[Money]
+    range: Optional[CompensationRange]
+    #End of list of possible types for union field compensation_amount.
+
+
+
+class CompensationInfo(BaseModel):
+    """
+    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.CompensationInfo
+    """
+    entries: Optional[List[CompensationEntry]]
+    annualizedBaseCompensationRange: Optional[CompensationRange]
+    annualizedTotalCompensationRange: Optional[CompensationRange]
+
+
+class DegreeType(AutoName):
+    """
+    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/DegreeType
+    """
+    DEGREE_TYPE_UNSPECIFIED = auto()
+    PRIMARY_EDUCATION = auto()
+    LOWER_SECONDARY_EDUCATION = auto()
+    UPPER_SECONDARY_EDUCATION = auto()
+    ADULT_REMEDIAL_EDUCATION = auto()
+    ASSOCIATES_OR_EQUIVALENT = auto()
+    BACHELORS_OR_EQUIVALENT = auto()
+    MASTERS_OR_EQUIVALENT = auto()
+    DOCTORAL_OR_EQUIVALENT = auto()
+
+
+class EmploymentType(AutoName):
+    """
+    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.EmploymentType
+    """
+    EMPLOYMENT_TYPE_UNSPECIFIED = auto()
+    FULL_TIME = auto()
+    PART_TIME = auto()
+    CONTRACTOR = auto()
+    CONTRACT_TO_HIRE = auto()
+    TEMPORARY = auto()
+    INTERN = auto()
+    VOLUNTEER = auto()
+    PER_DIEM = auto()
+    FLY_IN_FLY_OUT = auto()
+    OTHER_EMPLOYMENT_TYPE = auto()
+
+
+class JobLevel(AutoName):
+    """
+    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.JobLevel
+    """
+    JOB_LEVEL_UNSPECIFIED = auto()
+    ENTRY_LEVEL = auto()
+    EXPERIENCED = auto()
+    MANAGER = auto()
+    DIRECTOR = auto()
+    EXECUTIVE = auto()
+
+class PostingRegion(AutoName):
+    """
+    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.PostingRegion
+    """
+    POSTING_REGION_UNSPECIFIED = auto()
+    ADMINISTRATIVE_AREA = auto()
+    NATION = auto()
+    TELECOMMUTE = auto()
+
+
+class Visibility(AutoName):
+    """
+    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.Visibility
+    """
+    VISIBILITY_UNSPECIFIED = auto()
+    ACCOUNT_ONLY = auto()
+    SHARED_WITH_GOOGLE = auto()
+    SHARED_WITH_PUBLIC = auto()
+
+
+class JobCategory(AutoName):
+    """
+    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.JobCategory
+    """
+    JOB_CATEGORY_UNSPECIFIED = auto()
+    ACCOUNTING_AND_FINANCE = auto()
+    ADMINISTRATIVE_AND_OFFICE = auto()
+    ADVERTISING_AND_MARKETING = auto()
+    ANIMAL_CARE = auto()
+    ART_FASHION_AND_DESIGN = auto()
+    BUSINESS_OPERATIONS = auto()
+    CLEANING_AND_FACILITIES = auto()
+    COMPUTER_AND_IT = auto()
+    CONSTRUCTION = auto()
+    CUSTOMER_SERVICE = auto()
+    EDUCATION = auto()
+    ENTERTAINMENT_AND_TRAVEL = auto()
+    FARMING_AND_OUTDOORS = auto()
+    HEALTHCARE = auto()
+    HUMAN_RESOURCES = auto()
+    INSTALLATION_MAINTENANCE_AND_REPAIR = auto()
+    LEGAL = auto()
+    MANAGEMENT = auto()
+    MANUFACTURING_AND_WAREHOUSE = auto()
+    MEDIA_COMMUNICATIONS_AND_WRITING = auto()
+    OIL_GAS_AND_MINING = auto()
+    PERSONAL_CARE_AND_SERVICES = auto()
+    PROTECTIVE_SERVICES = auto()
+    REAL_ESTATE = auto()
+    RESTAURANT_AND_HOSPITALITY = auto()
+    SALES_AND_RETAIL = auto()
+    SCIENCE_AND_ENGINEERING = auto()
+    SOCIAL_SERVICES_AND_NON_PROFIT = auto()
+    SPORTS_FITNESS_AND_RECREATION = auto()
+    TRANSPORTATION_AND_LOGISTICS = auto()
+
+
+class DerivedInfo(BaseModel):
+    """
+    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.DerivedInfo
+    """
+    locations: Optional[List[Location]]
+    jobCategories: Optional[List[JobCategory]]
+
+
+class HtmlSanitization(AutoName):
+    """
+    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.HtmlSanitization
+    """
+    HTML_SANITIZATION_UNSPECIFIED = auto()
+    HTML_SANITIZATION_DISABLED = auto()
+    SIMPLE_FORMATTING_ONLY = auto()
+
+
+class ProcessingOptions(BaseModel):
+    """
+    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.ProcessingOptions
+    """
+    disableStreetAddressResolution: Optional[bool]
+    htmlSanitization: Optional[HtmlSanitization]
+
+
+class Jobs(BaseModel):
+    name: str
+    company: str
+    requisitionId: str
+    title: str
+    description: str
+    addresses: Optional[List[str]]
+    applicationInfo: Optional[ApplicationInfo]
+    jobBenefits: Optional[JobBenefit]
+    compensationInfo: Optional[CompensationInfo]
+    customAttributes: Optional[str]
+    # customAttributes: Optional[{
+    #     str: {
+    #         object(CustomAttribute)
+    #     },
+    #     ...
+    # }
+    degreeTypes: Optional[List[DegreeType]]
+    department: Optional[str]
+    employmentTypes: Optional[List[EmploymentType]]
+    incentives: Optional[str]
+    languageCode: Optional[str]
+    jobLevel: Optional[JobLevel]
+    promotionValue: Optional[int]
+    qualifications: Optional[str]
+    responsibilities: Optional[str]
+    postingRegion: Optional[PostingRegion]
+    visibility: Optional[Visibility] #deprecated
+    jobStartTime: Optional[str]
+    jobEndTime: Optional[str]
+    postingPublishTime: Optional[str]
+    postingExpireTime: Optional[str]
+
+    #output
+    postingCreateTime: Optional[str]
+    postingUpdateTime: Optional[str]
+    companyDisplayName: Optional[str]
+    derivedInfo: Optional[DerivedInfo]
+    processingOptions: Optional[ProcessingOptions]
