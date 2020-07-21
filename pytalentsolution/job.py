@@ -2,7 +2,7 @@
 https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs
 """
 from enum import auto
-from typing import List, Optional
+from typing import List, Optional, Any
 
 from pydantic import BaseModel
 
@@ -242,7 +242,7 @@ class Jobs(BaseModel):
     applicationInfo: Optional[ApplicationInfo]
     jobBenefits: Optional[JobBenefit]
     compensationInfo: Optional[CompensationInfo]
-    customAttributes: Optional[str]
+    customAttributes: Optional[Any]
     # customAttributes: Optional[{
     #     str: {
     #         object(CustomAttribute)
