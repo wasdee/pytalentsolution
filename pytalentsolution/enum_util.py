@@ -1,3 +1,6 @@
+from enum import Enum
+
+
 class AutoName(Enum):
     """
     https://docs.python.org/3/library/enum.html#using-automatic-values

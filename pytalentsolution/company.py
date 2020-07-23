@@ -1,9 +1,9 @@
-from enum import Enum, auto
+from enum import auto
 from typing import List, Optional
 
 from pydantic import BaseModel
 
-
+from pytalentsolution.enum_util import AutoName
 
 
 class LatLng(BaseModel):
