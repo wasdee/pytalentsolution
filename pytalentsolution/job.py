@@ -2,7 +2,7 @@
 https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs
 """
 from enum import auto
-from typing import List, Optional, Any
+from typing import List, Optional, Dict
 
 from pydantic import BaseModel
 
@@ -91,11 +91,10 @@ class CompensationEntry(BaseModel):
     description: Optional[str]
     expectedUnitsPerYear: Optional[int]
 
-    #Union field compensation_amount can be only one of the following:
+    # Union field compensation_amount can be only one of the following:
     amount: Optional[Money]
     range: Optional[CompensationRange]
-    #End of list of possible types for union field compensation_amount.
-
+    # End of list of possible types for union field compensation_amount.
 
 
 class CompensationInfo(BaseModel):
@@ -149,6 +148,7 @@ class JobLevel(AutoName):
     MANAGER = auto()
     DIRECTOR = auto()
     EXECUTIVE = auto()
+
 
 class PostingRegion(AutoName):
     """
@@ -232,7 +232,7 @@ class ProcessingOptions(BaseModel):
     htmlSanitization: Optional[HtmlSanitization]
 
 
-class Jobs(BaseModel):
+class Job(BaseModel):
     name: str
     company: str
     requisitionId: str
@@ -242,13 +242,7 @@ class Jobs(BaseModel):
     applicationInfo: Optional[ApplicationInfo]
     jobBenefits: Optional[JobBenefit]
     compensationInfo: Optional[CompensationInfo]
-    customAttributes: Optional[Any]
-    # customAttributes: Optional[{
-    #     str: {
-    #         object(CustomAttribute)
-    #     },
-    #     ...
-    # }
+    customAttributes: Optional[Dict[str, Dict]]
     degreeTypes: Optional[List[DegreeType]]
     department: Optional[str]
     employmentTypes: Optional[List[EmploymentType]]
@@ -259,13 +253,15 @@ class Jobs(BaseModel):
     qualifications: Optional[str]
     responsibilities: Optional[str]
     postingRegion: Optional[PostingRegion]
-    visibility: Optional[Visibility] #deprecated
     jobStartTime: Optional[str]
     jobEndTime: Optional[str]
     postingPublishTime: Optional[str]
     postingExpireTime: Optional[str]
 
-    #output
+    # deprecated
+    visibility: Optional[Visibility]
+
+    # output
     postingCreateTime: Optional[str]
     postingUpdateTime: Optional[str]
     companyDisplayName: Optional[str]
