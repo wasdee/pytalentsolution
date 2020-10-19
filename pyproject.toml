@@ -8,6 +8,8 @@ license = "ISC"
 [tool.poetry.dependencies]
 python = "^3.8"
 pydantic = "^1.5.1"
+google-cloud-talent = "^2.0.0"
+python-decouple = "^3.3"
 
 [tool.poetry.dev-dependencies]
 
