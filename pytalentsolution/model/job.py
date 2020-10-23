@@ -102,8 +102,8 @@ class CompensationInfo(BaseModel):
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.CompensationInfo
     """
     entries: Optional[List[CompensationEntry]]
-    annualizedBaseCompensationRange: Optional[CompensationRange]
-    annualizedTotalCompensationRange: Optional[CompensationRange]
+    annualized_base_compensation_range: Optional[CompensationRange]
+    annualizedTotal_compensation_range: Optional[CompensationRange]
 
 
 class DegreeType(AutoName):
@@ -212,7 +212,7 @@ class DerivedInfo(BaseModel):
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.DerivedInfo
     """
     locations: Optional[List[Location]]
-    jobCategories: Optional[List[JobCategory]]
+    job_categories: Optional[List[JobCategory]]
 
 
 class HtmlSanitization(AutoName):
@@ -228,8 +228,8 @@ class ProcessingOptions(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.ProcessingOptions
     """
-    disableStreetAddressResolution: Optional[bool]
-    htmlSanitization: Optional[HtmlSanitization]
+    disable_street_address_resolution: Optional[bool]
+    html_sanitization: Optional[HtmlSanitization]
 
 
 class Job(BaseModel):
@@ -262,8 +262,8 @@ class Job(BaseModel):
     visibility: Optional[Visibility]
 
     # output
-    postingCreateTime: Optional[str]
-    postingUpdateTime: Optional[str]
-    companyDisplayName: Optional[str]
-    derivedInfo: Optional[DerivedInfo]
-    processingOptions: Optional[ProcessingOptions]
+    posting_create_time: Optional[str]
+    posting_update_time: Optional[str]
+    company_display_name: Optional[str]
+    derived_info: Optional[DerivedInfo]
+    processing_options: Optional[ProcessingOptions]
