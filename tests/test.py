@@ -12,27 +12,27 @@ company_obj = Company(display_name = "github", external_id = "1")
 job_obj = Job(company="",requisition_id="1",title="engineer",description="implement system")
 
 class TestFlow(unittest.TestCase):
-    def test_step_1(self):
+    def test_step_a(self):
         """ Create Tenant """
         tenant_obj.name = create_tenant(tenant=tenant_obj)
         self.assertIsInstance(tenant_obj.name, str, msg = "Create Tenant")        
 
-    def test_step_2(self):
+    def test_step_b(self):
         """ Get Tenant """
         result = get_tenant(tenant=tenant_obj)
         self.assertIsNotNone(result, msg = "Get Tenant") 
 
-    def test_step_3(self):
+    def test_step_c(self):
         """" Create Company """
         company_obj.name = create_company(tenant=tenant_obj, company=company_obj)
         self.assertIsInstance(company_obj.name, str, msg = "Create Company") 
 
-    def test_step_4(self):
+    def test_step_d(self):
         """ Get Company """
         result = get_company(company=company_obj)
         self.assertIsNotNone(result, msg = "Get Company")
 
-    def test_step_5(self):
+    def test_step_e(self):
         """ Update Company """
         company_obj.display_name = "github_v2"
         result = update_company(company=company_obj)
@@ -40,18 +40,18 @@ class TestFlow(unittest.TestCase):
         result = get_company(company=company_obj)
         self.assertEqual(result.display_name, "github_v2",msg = "Validate Update")
 
-    def test_step_6(self):
+    def test_step_f(self):
         """ Create Job """
         job_obj.company = company_obj.name.split("/")[-1]
         job_obj.name = create_job(tenant=tenant_obj, job=job_obj)
         self.assertIsInstance(job_obj.name, str, msg = "Create Job")
 
-    def test_step_7(self):
+    def test_step_g(self):
         """ Get Job """
         result = get_job(job=job_obj)
         self.assertIsNotNone(result, msg = "Get Job")
 
-    def test_step_8(self):
+    def test_step_h(self):
         """ Update Job """
         job_obj.title = "worker"
         result = update_job(job=job_obj)
@@ -59,17 +59,17 @@ class TestFlow(unittest.TestCase):
         result = get_job(job=job_obj)
         self.assertEqual(result.title, "worker",msg = "Validate Update")
 
-    def test_step_9(self):
+    def test_step_j(self):
         """ Delete Job """
         result = delete_job(job=job_obj)
         self.assertIsNone(result, msg = "Delete Job")        
 
-    def test_step_a(self):
+    def test_step_i(self):
         """ Delete Company """
         result = delete_company(company=company_obj)
         self.assertIsNone(result, msg = "Delete Company")
 
-    def test_step_b(self):
+    def test_step_k(self):
         """ Delete Tenant """
         result = delete_tenant(tenant=tenant_obj)
         self.assertIsNone(result, msg = "Delete Tenant")

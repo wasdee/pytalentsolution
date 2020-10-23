@@ -11,7 +11,6 @@ from pytalentsolution.model.job import Money, JobCategory, EmploymentType, Compe
 from pytalentsolution.model.enum_util import AutoName
 
 
-
 class SearchJobsRequest(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/projects.tenants.jobs/search
@@ -94,7 +93,6 @@ class LocationFilter(BaseModel):
     lat_lng : Optional[LatLng]
     distance_in_miles : Optional[int]
     telecommute_preference : Optional[TelecommutePreference]
-
 
 
 class TelecommutePreference(AutoName):
@@ -208,8 +206,8 @@ class CustomRankingInfo(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/CustomRankingInfo
     """
-    importanceLevel : ImportanceLevel
-    rankingExpression : str
+    importance_level : ImportanceLevel
+    ranking_expression : str
 
 class ImportanceLevel(AutoName):
     """
