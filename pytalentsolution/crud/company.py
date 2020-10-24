@@ -68,7 +68,7 @@ def delete_company(company : Company):
     except Exception as e:
         raise e
 
-def get_list(tenant : Tenant) -> list:
+def list_company(tenant : Tenant) -> list:
     """
     List Company
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/projects.tenants.companies/list

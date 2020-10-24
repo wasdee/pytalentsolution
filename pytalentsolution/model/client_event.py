@@ -61,7 +61,7 @@ class ClientEvent(BaseModel):
     """
     request_id: Optional[str]
     event_id: str
-    create_time: str
+    create_time: str # google RPC require timestamp obj ???
     event_notes: Optional[str]
 
     #Union field 'event' can be only one of the following:

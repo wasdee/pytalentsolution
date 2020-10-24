@@ -1,6 +1,3 @@
-"""
-https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs
-"""
 from enum import auto
 from typing import List, Optional, Dict
 
@@ -230,7 +227,6 @@ class ProcessingOptions(BaseModel):
     """
     disable_street_address_resolution: Optional[bool]
     html_sanitization: Optional[HtmlSanitization]
-
 
 class Job(BaseModel):
     name: Optional[str]

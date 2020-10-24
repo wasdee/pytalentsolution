@@ -39,7 +39,7 @@ def get_tenant(tenant : Tenant) -> Tenant:
     except Exception as e:
         raise e
 
-def update_tenant():
+def update_tenant(tenant : Tenant) -> Tenant:
     """
     update the external_id 
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/projects.tenants/patch
@@ -49,16 +49,12 @@ def update_tenant():
     Returns:
         response: talent response object with [name, external_id]
     """    
-    pass
-    # try:
-    #     parent = f"projects/{project_id}"    
-    #     tenant = talent.Tenant(name=name)
-    #     mask = {
-    #         "externalId": "saku_dev_v2",
-    #     }
-    #     res = client_talent.update_tenant(tenant=tenant,update_mask=mask)
-    # except Exception as e:
-    #     raise e
+    try:
+        tenant = talent.Tenant(name=tenant.name, external_id=tenant.external_id)
+        response = client_tenant.update_tenant(tenant=tenant)
+        return response
+    except Exception as e:
+        raise e
 
 def delete_tenant(tenant : Tenant):
     """
@@ -73,7 +69,7 @@ def delete_tenant(tenant : Tenant):
     except Exception as e:
         raise e
 
-def get_list() -> list:
+def list_tenant() -> list:
     """
     Get Tenants List
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/projects.tenants/list
