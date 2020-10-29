@@ -4,7 +4,7 @@ from typing import List, Optional
 from pydantic import BaseModel
 
 from google.cloud.talent_v4 import CompanySize
-# from google.cloud.talent_v4 import Location
+from google.cloud.talent_v4 import Location as CTS_Location
 
 from pytalentsolution.model.enum_util import AutoName
 
@@ -34,25 +34,25 @@ class PostalAddress(BaseModel):
     organization: Optional[str]
 
 
-class LocationType(AutoName):
-    LOCATION_TYPE_UNSPECIFIED = auto()
-    COUNTRY = auto()
-    ADMINISTRATIVE_AREA = auto()
-    SUB_ADMINISTRATIVE_AREA = auto()
-    LOCALITY = auto()
-    POSTAL_CODE = auto()
-    SUB_LOCALITY = auto()
-    SUB_LOCALITY_1 = auto()
-    SUB_LOCALITY_2 = auto()
-    NEIGHBORHOOD = auto()
-    STREET_ADDRESS = auto()
+# class LocationType(AutoName):
+#     LOCATION_TYPE_UNSPECIFIED = auto()
+#     COUNTRY = auto()
+#     ADMINISTRATIVE_AREA = auto()
+#     SUB_ADMINISTRATIVE_AREA = auto()
+#     LOCALITY = auto()
+#     POSTAL_CODE = auto()
+#     SUB_LOCALITY = auto()
+#     SUB_LOCALITY_1 = auto()
+#     SUB_LOCALITY_2 = auto()
+#     NEIGHBORHOOD = auto()
+#     STREET_ADDRESS = auto()
 
 
 class Location(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/Location
     """
-    location_type: Optional[LocationType]
+    location_type: Optional[CTS_Location.LocationType]
     postal_address: Optional[PostalAddress]
     latLng: Optional[LatLng]
     radius_miles: Optional[int]

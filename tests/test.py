@@ -69,12 +69,12 @@ class TestFlow(unittest.TestCase):
     def test_step_i(self):
         """ Update Job """
         job_obj.title = "worker"
-        job_obj.employment_types = EmploymentType.FULL_TIME
+        job_obj.employment_types = [EmploymentType.FULL_TIME]
         result = update_job(job=job_obj)
         self.assertIsNotNone(result, msg = "Update Job")
         result = get_job(job=job_obj)
         self.assertEqual(result.title, "worker",msg = "Validate Update")
-        self.assertEqual(result.employment_types, EmploymentType.FULL_TIME,msg = "Validate Update")
+        self.assertEqual(result.employment_types, [EmploymentType.FULL_TIME] ,msg = "Validate Update")
 
 
     # def test_step_j(self):
@@ -87,7 +87,7 @@ class TestFlow(unittest.TestCase):
     #     self.assertIsNotNone(result, msg = "client event")
 
     def test_step_k(self):
-        """ Test Search Query """
+        """ Search Query """
         job_query_obj = JobQuery(query="worker")
         request_metadata_obj = RequestMetadata(domain="pytalentsolution", session_id="1",user_id="tester")
         result = search_jobs(tenant=tenant_obj,job_query=job_query_obj,request_metadata=request_metadata_obj)

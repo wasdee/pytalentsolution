@@ -7,8 +7,18 @@ from pytalentsolution.model.enum_util import AutoName
 
 from pytalentsolution.model.company import Location
 
-from google.cloud.talent_v4 import JobBenefit, EmploymentType, JobLevel, PostingRegion, Visibility, JobCategory, HtmlSanitization
-
+from google.cloud.talent_v4 import (
+                                    JobBenefit, 
+                                    EmploymentType,
+                                    DegreeType, 
+                                    JobLevel, 
+                                    PostingRegion, 
+                                    Visibility, 
+                                    JobCategory, 
+                                    HtmlSanitization,
+                                    CompensationInfo as CTS_CompensationInfo
+                                )
+# from google.cloud.talent_v4 import CompensationInfo as CTS_CompensationInfo
 
 class ApplicationInfo(BaseModel):
     """
@@ -37,33 +47,33 @@ class ApplicationInfo(BaseModel):
 #     VISION = auto()
 
 
-class CompensationType(AutoName):
-    """
-    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.CompensationInfo
-    """
-    COMPENSATION_TYPE_UNSPECIFIED = auto()
-    BASE = auto()
-    BONUS = auto()
-    SIGNING_BONUS = auto()
-    EQUITY = auto()
-    PROFIT_SHARING = auto()
-    COMMISSIONS = auto()
-    TIPS = auto()
-    OTHER_COMPENSATION_TYPE = auto()
+# class CompensationType(AutoName):
+#     """
+#     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.CompensationInfo
+#     """
+#     COMPENSATION_TYPE_UNSPECIFIED = auto()
+#     BASE = auto()
+#     BONUS = auto()
+#     SIGNING_BONUS = auto()
+#     EQUITY = auto()
+#     PROFIT_SHARING = auto()
+#     COMMISSIONS = auto()
+#     TIPS = auto()
+#     OTHER_COMPENSATION_TYPE = auto()
 
 
-class CompensationUnit(AutoName):
-    """
-    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.CompensationUnit
-    """
-    COMPENSATION_UNIT_UNSPECIFIED = auto()
-    HOURLY = auto()
-    DAILY = auto()
-    WEEKLY = auto()
-    MONTHLY = auto()
-    YEARLY = auto()
-    ONE_TIME = auto()
-    OTHER_COMPENSATION_UNIT = auto()
+# class CompensationUnit(AutoName):
+#     """
+#     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.CompensationUnit
+#     """
+#     COMPENSATION_UNIT_UNSPECIFIED = auto()
+#     HOURLY = auto()
+#     DAILY = auto()
+#     WEEKLY = auto()
+#     MONTHLY = auto()
+#     YEARLY = auto()
+#     ONE_TIME = auto()
+#     OTHER_COMPENSATION_UNIT = auto()
 
 
 class Money(BaseModel):
@@ -87,8 +97,8 @@ class CompensationEntry(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.CompensationEntry
     """
-    type: Optional[CompensationType]
-    unit: Optional[CompensationUnit]
+    type: Optional[CTS_CompensationInfo.CompensationType]
+    unit: Optional[CTS_CompensationInfo.CompensationUnit]
     description: Optional[str]
     expectedUnitsPerYear: Optional[int]
 
@@ -107,19 +117,19 @@ class CompensationInfo(BaseModel):
     annualizedTotal_compensation_range: Optional[CompensationRange]
 
 
-class DegreeType(AutoName):
-    """
-    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/DegreeType
-    """
-    DEGREE_TYPE_UNSPECIFIED = auto()
-    PRIMARY_EDUCATION = auto()
-    LOWER_SECONDARY_EDUCATION = auto()
-    UPPER_SECONDARY_EDUCATION = auto()
-    ADULT_REMEDIAL_EDUCATION = auto()
-    ASSOCIATES_OR_EQUIVALENT = auto()
-    BACHELORS_OR_EQUIVALENT = auto()
-    MASTERS_OR_EQUIVALENT = auto()
-    DOCTORAL_OR_EQUIVALENT = auto()
+# class DegreeType(AutoName):
+#     """
+#     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/DegreeType
+#     """
+#     DEGREE_TYPE_UNSPECIFIED = auto()
+#     PRIMARY_EDUCATION = auto()
+#     LOWER_SECONDARY_EDUCATION = auto()
+#     UPPER_SECONDARY_EDUCATION = auto()
+#     ADULT_REMEDIAL_EDUCATION = auto()
+#     ASSOCIATES_OR_EQUIVALENT = auto()
+#     BACHELORS_OR_EQUIVALENT = auto()
+#     MASTERS_OR_EQUIVALENT = auto()
+#     DOCTORAL_OR_EQUIVALENT = auto()
 
 
 # class EmploymentType(AutoName):
