@@ -14,7 +14,6 @@ class DataUsageType(AutoName):
     AGGREGATED = auto()
     ISOLATED = auto()
 
-
 class Tenant(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.tenants

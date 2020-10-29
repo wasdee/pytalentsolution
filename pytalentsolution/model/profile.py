@@ -5,8 +5,10 @@ from typing import Optional, List, Any
 
 from pydantic import BaseModel
 
-from pytalentsolution.model.company import AutoName, Location
+from pytalentsolution.model.company import AutoName
 from pytalentsolution.model.job import DegreeType
+
+
 
 
 class ResumeType(AutoName):

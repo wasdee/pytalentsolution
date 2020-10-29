@@ -1,13 +1,14 @@
 from pytalentsolution.model.tenant import Tenant
-from pytalentsolution.model.company import Company
+from pytalentsolution.model.company import Company, CompanySize
 from pytalentsolution.model.client_event import ClientEvent
-from pytalentsolution.model.job import Job
+from pytalentsolution.model.job import Job, EmploymentType
 from pytalentsolution.model.job_search import JobQuery, RequestMetadata
 from pytalentsolution.crud.tenant import create_tenant, get_tenant, delete_tenant, update_tenant
 from pytalentsolution.crud.company import create_company, get_company, update_company, delete_company
 from pytalentsolution.crud.job import create_job, get_job, update_job, delete_job, search_jobs
 from pytalentsolution.crud.client_event import create_client_event
 
+from pytalentsolution.model.company import CompanySize
 
 import unittest
 
@@ -47,10 +48,12 @@ class TestFlow(unittest.TestCase):
     def test_step_f(self):
         """ Update Company """
         company_obj.display_name = "github_v2"
+        company_obj.size = CompanySize.BIG
         result = update_company(company=company_obj)
         self.assertIsNotNone(result, msg = "Update Company")
         result = get_company(company=company_obj)
         self.assertEqual(result.display_name, "github_v2",msg = "Validate Update")
+        self.assertEqual(result.size, CompanySize.BIG ,msg = "Validate Update")
 
     def test_step_g(self):
         """ Create Job """
@@ -66,10 +69,13 @@ class TestFlow(unittest.TestCase):
     def test_step_i(self):
         """ Update Job """
         job_obj.title = "worker"
+        job_obj.employment_types = EmploymentType.FULL_TIME
         result = update_job(job=job_obj)
         self.assertIsNotNone(result, msg = "Update Job")
         result = get_job(job=job_obj)
         self.assertEqual(result.title, "worker",msg = "Validate Update")
+        self.assertEqual(result.employment_types, EmploymentType.FULL_TIME,msg = "Validate Update")
+
 
     # def test_step_j(self):
     #     """ Create client event """

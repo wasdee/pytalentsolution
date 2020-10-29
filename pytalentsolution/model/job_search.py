@@ -7,6 +7,7 @@ from pytalentsolution.model.company import LatLng
 from pytalentsolution.model.job import Money, JobCategory, EmploymentType, CompensationRange
 from pytalentsolution.model.enum_util import AutoName
 
+from google.cloud.talent_v4 import CommuteMethod, JobView
 class SearchMode(AutoName):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/SearchMode
@@ -44,13 +45,13 @@ class RequestMetadata(BaseModel):
     allow_missing_ids : Optional[bool]
     device_info : Optional[DeviceInfo]
 
-class CommuteMethod(AutoName):
-    """
-    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/JobQuery#CommuteMethod
-    """
-    COMMUTE_METHOD_UNSPECIFIED = auto()
-    DRIVING = auto()
-    TRANSIT = auto()
+# class CommuteMethod(AutoName):
+#     """
+#     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/JobQuery#CommuteMethod
+#     """
+#     COMMUTE_METHOD_UNSPECIFIED = auto()
+#     DRIVING = auto()
+#     TRANSIT = auto()
 
 class RoadTraffic(AutoName):
     """
@@ -161,15 +162,15 @@ class HistogramQuery(BaseModel):
     """
     histogram_query : Optional[str]
 
-class JobView(AutoName):
-    """
-    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/JobView
-    """
-    JOB_VIEW_UNSPECIFIED = auto()
-    JOB_VIEW_ID_ONLY = auto()
-    JOB_VIEW_MINIMAL = auto()
-    JOB_VIEW_SMALL = auto()
-    JOB_VIEW_FULL = auto()
+# class JobView(AutoName):
+#     """
+#     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/JobView
+#     """
+#     JOB_VIEW_UNSPECIFIED = auto()
+#     JOB_VIEW_ID_ONLY = auto()
+#     JOB_VIEW_MINIMAL = auto()
+#     JOB_VIEW_SMALL = auto()
+#     JOB_VIEW_FULL = auto()
 
 class DiversificationLevel(AutoName):
     """

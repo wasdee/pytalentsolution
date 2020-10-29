@@ -3,6 +3,9 @@ from typing import List, Optional
 
 from pydantic import BaseModel
 
+from google.cloud.talent_v4 import CompanySize
+# from google.cloud.talent_v4 import Location
+
 from pytalentsolution.model.enum_util import AutoName
 
 
@@ -59,21 +62,21 @@ class DerivedInfo(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.companies#derivedinfo
     """
-    headquartersLocation: Optional[Location]
+    headquarters_location: Optional[Location]
 
 
-class CompanySize(AutoName):
-    """
-    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.companies#companysize
-    """
-    COMPANY_SIZE_UNSPECIFIED = auto()
-    MINI = auto()
-    SMALL = auto()
-    SMEDIUM = auto()
-    MEDIUM = auto()
-    BIG = auto()
-    BIGGER = auto()
-    GIANT = auto()
+# class CompanySize(AutoName):
+#     """
+#     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.companies#companysize
+#     """
+#     COMPANY_SIZE_UNSPECIFIED = auto()
+#     MINI = auto()
+#     SMALL = auto()
+#     SMEDIUM = auto()
+#     MEDIUM = auto()
+#     BIG = auto()
+#     BIGGER = auto()
+#     GIANT = auto()
 
 
 class Company(BaseModel):

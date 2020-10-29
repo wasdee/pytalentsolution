@@ -3,7 +3,11 @@ from typing import List, Optional, Dict
 
 from pydantic import BaseModel
 
-from pytalentsolution.model.company import AutoName, Location
+from pytalentsolution.model.enum_util import AutoName
+
+from pytalentsolution.model.company import Location
+
+from google.cloud.talent_v4 import JobBenefit, EmploymentType, JobLevel, PostingRegion, Visibility, JobCategory, HtmlSanitization
 
 
 class ApplicationInfo(BaseModel):
@@ -15,22 +19,22 @@ class ApplicationInfo(BaseModel):
     uris: Optional[List[str]]
 
 
-class JobBenefit(AutoName):
-    """
-    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.JobBenefit
-    """
-    JOB_BENEFIT_UNSPECIFIED = auto()
-    CHILD_CARE = auto()
-    DENTAL = auto()
-    DOMESTIC_PARTNER = auto()
-    FLEXIBLE_HOURS = auto()
-    MEDICAL = auto()
-    LIFE_INSURANCE = auto()
-    PARENTAL_LEAVE = auto()
-    RETIREMENT_PLAN = auto()
-    SICK_DAYS = auto()
-    VACATION = auto()
-    VISION = auto()
+# class JobBenefit(AutoName):
+#     """
+#     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.JobBenefit
+#     """
+#     JOB_BENEFIT_UNSPECIFIED = auto()
+#     CHILD_CARE = auto()
+#     DENTAL = auto()
+#     DOMESTIC_PARTNER = auto()
+#     FLEXIBLE_HOURS = auto()
+#     MEDICAL = auto()
+#     LIFE_INSURANCE = auto()
+#     PARENTAL_LEAVE = auto()
+#     RETIREMENT_PLAN = auto()
+#     SICK_DAYS = auto()
+#     VACATION = auto()
+#     VISION = auto()
 
 
 class CompensationType(AutoName):
@@ -118,90 +122,90 @@ class DegreeType(AutoName):
     DOCTORAL_OR_EQUIVALENT = auto()
 
 
-class EmploymentType(AutoName):
-    """
-    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.EmploymentType
-    """
-    EMPLOYMENT_TYPE_UNSPECIFIED = auto()
-    FULL_TIME = auto()
-    PART_TIME = auto()
-    CONTRACTOR = auto()
-    CONTRACT_TO_HIRE = auto()
-    TEMPORARY = auto()
-    INTERN = auto()
-    VOLUNTEER = auto()
-    PER_DIEM = auto()
-    FLY_IN_FLY_OUT = auto()
-    OTHER_EMPLOYMENT_TYPE = auto()
+# class EmploymentType(AutoName):
+#     """
+#     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.EmploymentType
+#     """
+#     EMPLOYMENT_TYPE_UNSPECIFIED = auto()
+#     FULL_TIME = auto()
+#     PART_TIME = auto()
+#     CONTRACTOR = auto()
+#     CONTRACT_TO_HIRE = auto()
+#     TEMPORARY = auto()
+#     INTERN = auto()
+#     VOLUNTEER = auto()
+#     PER_DIEM = auto()
+#     FLY_IN_FLY_OUT = auto()
+#     OTHER_EMPLOYMENT_TYPE = auto()
 
 
-class JobLevel(AutoName):
-    """
-    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.JobLevel
-    """
-    JOB_LEVEL_UNSPECIFIED = auto()
-    ENTRY_LEVEL = auto()
-    EXPERIENCED = auto()
-    MANAGER = auto()
-    DIRECTOR = auto()
-    EXECUTIVE = auto()
+# class JobLevel(AutoName):
+#     """
+#     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.JobLevel
+#     """
+#     JOB_LEVEL_UNSPECIFIED = auto()
+#     ENTRY_LEVEL = auto()
+#     EXPERIENCED = auto()
+#     MANAGER = auto()
+#     DIRECTOR = auto()
+#     EXECUTIVE = auto()
 
 
-class PostingRegion(AutoName):
-    """
-    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.PostingRegion
-    """
-    POSTING_REGION_UNSPECIFIED = auto()
-    ADMINISTRATIVE_AREA = auto()
-    NATION = auto()
-    TELECOMMUTE = auto()
+# class PostingRegion(AutoName):
+#     """
+#     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.PostingRegion
+#     """
+#     POSTING_REGION_UNSPECIFIED = auto()
+#     ADMINISTRATIVE_AREA = auto()
+#     NATION = auto()
+#     TELECOMMUTE = auto()
 
 
-class Visibility(AutoName):
-    """
-    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.Visibility
-    """
-    VISIBILITY_UNSPECIFIED = auto()
-    ACCOUNT_ONLY = auto()
-    SHARED_WITH_GOOGLE = auto()
-    SHARED_WITH_PUBLIC = auto()
+# class Visibility(AutoName):
+#     """
+#     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.Visibility
+#     """
+#     VISIBILITY_UNSPECIFIED = auto()
+#     ACCOUNT_ONLY = auto()
+#     SHARED_WITH_GOOGLE = auto()
+#     SHARED_WITH_PUBLIC = auto()
 
 
-class JobCategory(AutoName):
-    """
-    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.JobCategory
-    """
-    JOB_CATEGORY_UNSPECIFIED = auto()
-    ACCOUNTING_AND_FINANCE = auto()
-    ADMINISTRATIVE_AND_OFFICE = auto()
-    ADVERTISING_AND_MARKETING = auto()
-    ANIMAL_CARE = auto()
-    ART_FASHION_AND_DESIGN = auto()
-    BUSINESS_OPERATIONS = auto()
-    CLEANING_AND_FACILITIES = auto()
-    COMPUTER_AND_IT = auto()
-    CONSTRUCTION = auto()
-    CUSTOMER_SERVICE = auto()
-    EDUCATION = auto()
-    ENTERTAINMENT_AND_TRAVEL = auto()
-    FARMING_AND_OUTDOORS = auto()
-    HEALTHCARE = auto()
-    HUMAN_RESOURCES = auto()
-    INSTALLATION_MAINTENANCE_AND_REPAIR = auto()
-    LEGAL = auto()
-    MANAGEMENT = auto()
-    MANUFACTURING_AND_WAREHOUSE = auto()
-    MEDIA_COMMUNICATIONS_AND_WRITING = auto()
-    OIL_GAS_AND_MINING = auto()
-    PERSONAL_CARE_AND_SERVICES = auto()
-    PROTECTIVE_SERVICES = auto()
-    REAL_ESTATE = auto()
-    RESTAURANT_AND_HOSPITALITY = auto()
-    SALES_AND_RETAIL = auto()
-    SCIENCE_AND_ENGINEERING = auto()
-    SOCIAL_SERVICES_AND_NON_PROFIT = auto()
-    SPORTS_FITNESS_AND_RECREATION = auto()
-    TRANSPORTATION_AND_LOGISTICS = auto()
+# class JobCategory(AutoName):
+#     """
+#     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.JobCategory
+#     """
+#     JOB_CATEGORY_UNSPECIFIED = auto()
+#     ACCOUNTING_AND_FINANCE = auto()
+#     ADMINISTRATIVE_AND_OFFICE = auto()
+#     ADVERTISING_AND_MARKETING = auto()
+#     ANIMAL_CARE = auto()
+#     ART_FASHION_AND_DESIGN = auto()
+#     BUSINESS_OPERATIONS = auto()
+#     CLEANING_AND_FACILITIES = auto()
+#     COMPUTER_AND_IT = auto()
+#     CONSTRUCTION = auto()
+#     CUSTOMER_SERVICE = auto()
+#     EDUCATION = auto()
+#     ENTERTAINMENT_AND_TRAVEL = auto()
+#     FARMING_AND_OUTDOORS = auto()
+#     HEALTHCARE = auto()
+#     HUMAN_RESOURCES = auto()
+#     INSTALLATION_MAINTENANCE_AND_REPAIR = auto()
+#     LEGAL = auto()
+#     MANAGEMENT = auto()
+#     MANUFACTURING_AND_WAREHOUSE = auto()
+#     MEDIA_COMMUNICATIONS_AND_WRITING = auto()
+#     OIL_GAS_AND_MINING = auto()
+#     PERSONAL_CARE_AND_SERVICES = auto()
+#     PROTECTIVE_SERVICES = auto()
+#     REAL_ESTATE = auto()
+#     RESTAURANT_AND_HOSPITALITY = auto()
+#     SALES_AND_RETAIL = auto()
+#     SCIENCE_AND_ENGINEERING = auto()
+#     SOCIAL_SERVICES_AND_NON_PROFIT = auto()
+#     SPORTS_FITNESS_AND_RECREATION = auto()
+#     TRANSPORTATION_AND_LOGISTICS = auto()
 
 
 class DerivedInfo(BaseModel):
@@ -212,13 +216,13 @@ class DerivedInfo(BaseModel):
     job_categories: Optional[List[JobCategory]]
 
 
-class HtmlSanitization(AutoName):
-    """
-    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.HtmlSanitization
-    """
-    HTML_SANITIZATION_UNSPECIFIED = auto()
-    HTML_SANITIZATION_DISABLED = auto()
-    SIMPLE_FORMATTING_ONLY = auto()
+# class HtmlSanitization(AutoName):
+#     """
+#     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.HtmlSanitization
+#     """
+#     HTML_SANITIZATION_UNSPECIFIED = auto()
+#     HTML_SANITIZATION_DISABLED = auto()
+#     SIMPLE_FORMATTING_ONLY = auto()
 
 
 class ProcessingOptions(BaseModel):
