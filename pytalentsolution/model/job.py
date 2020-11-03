@@ -97,14 +97,14 @@ class CompensationEntry(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.CompensationEntry
     """
-    type: Optional[CTS_CompensationInfo.CompensationType]
+    type_: Optional[CTS_CompensationInfo.CompensationType]
     unit: Optional[CTS_CompensationInfo.CompensationUnit]
     description: Optional[str]
     expected_units_per_year: Optional[int]
 
     # Union field compensation_amount can be only one of the following:
     amount: Optional[Money]
-    range: Optional[CompensationRange]
+    range_: Optional[CompensationRange]
     # End of list of possible types for union field compensation_amount.
 
 
