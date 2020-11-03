@@ -80,7 +80,7 @@ class Money(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.Money
     """
-    currencyCode: Optional[str]
+    currency_code: Optional[str]
     units: Optional[str]
     nanos: Optional[int]
 
@@ -89,8 +89,8 @@ class CompensationRange(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.CompensationRange
     """
-    maxCompensation: Optional[Money]
-    minCompensation: Optional[Money]
+    max_compensation: Optional[Money]
+    min_compensation: Optional[Money]
 
 
 class CompensationEntry(BaseModel):
@@ -100,7 +100,7 @@ class CompensationEntry(BaseModel):
     type: Optional[CTS_CompensationInfo.CompensationType]
     unit: Optional[CTS_CompensationInfo.CompensationUnit]
     description: Optional[str]
-    expectedUnitsPerYear: Optional[int]
+    expected_units_per_year: Optional[int]
 
     # Union field compensation_amount can be only one of the following:
     amount: Optional[Money]
@@ -114,7 +114,7 @@ class CompensationInfo(BaseModel):
     """
     entries: Optional[List[CompensationEntry]]
     annualized_base_compensation_range: Optional[CompensationRange]
-    annualizedTotal_compensation_range: Optional[CompensationRange]
+    annualized_total_compensation_range: Optional[CompensationRange]
 
 
 # class DegreeType(AutoName):
