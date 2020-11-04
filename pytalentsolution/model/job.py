@@ -1,5 +1,5 @@
 from enum import auto
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Union
 
 from pydantic import BaseModel
 
@@ -16,9 +16,9 @@ from google.cloud.talent_v4 import (
                                     Visibility, 
                                     JobCategory, 
                                     HtmlSanitization,
-                                    CompensationInfo as CTS_CompensationInfo
+                                    CompensationInfo as CTS_CompensationInfo,
                                 )
-# from google.cloud.talent_v4 import CompensationInfo as CTS_CompensationInfo
+from google.cloud.talent_v4 import CustomAttribute as CTS_CustomAttributes       
 
 class ApplicationInfo(BaseModel):
     """
@@ -81,7 +81,7 @@ class Money(BaseModel):
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.Money
     """
     currency_code: Optional[str]
-    units: Optional[str]
+    units: Optional[int] # TODO: wtf wtf Docs said it's str type as int64 format, but when I sent it, it error wtf wtf wtf wtf
     nanos: Optional[int]
 
 
@@ -242,6 +242,18 @@ class ProcessingOptions(BaseModel):
     disable_street_address_resolution: Optional[bool]
     html_sanitization: Optional[HtmlSanitization]
 
+class CustomAttributes(BaseModel):
+    string_values : Optional[List[str]] = None
+    long_values : Optional[List[int]] = None
+    filterable : Optional[bool] = None
+    keyword_searchable : Optional[bool] = None
+
+    def to_protoMessage(self):
+        obj = CTS_CustomAttributes()
+        for k,v in self.dict().items():
+            setattr(obj, k, v)
+        return obj
+
 class Job(BaseModel):
     name: Optional[str]
     company: str
@@ -252,7 +264,8 @@ class Job(BaseModel):
     application_info: Optional[ApplicationInfo]
     job_benefits: Optional[JobBenefit]
     compensation_info: Optional[CompensationInfo]
-    custom_attributes: Optional[Dict[str, Dict]]
+    custom_attributes: Optional[Dict[str, Union[CustomAttributes, CTS_CustomAttributes]]]
+    # custom_attributes: Optional[Dict[str, Union[CustomAttributes]]]
     degree_types: Optional[List[DegreeType]]
     department: Optional[str]
     employment_types: Optional[List[EmploymentType]]
@@ -277,3 +290,11 @@ class Job(BaseModel):
     company_display_name: Optional[str]
     derived_info: Optional[DerivedInfo]
     processing_options: Optional[ProcessingOptions]
+
+    def prepare_for_rpc(self):
+        for k,v in self.custom_attributes.items():
+            self.custom_attributes[k] = v.to_protoMessage()
+        return self
+
+    class Config:
+        arbitrary_types_allowed = True

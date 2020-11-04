@@ -20,7 +20,7 @@ def create_job(tenant : Tenant, job : Job) -> str:
         response.name: The job path `projects/project_id/tenant/tenant_id/company/company_id/job/job_id`
     """
     try: 
-        response = client_job.create_job(parent = tenant.name, job = job.dict(exclude_unset=True))
+        response = client_job.create_job(parent = tenant.name, job = job.prepare_for_rpc().dict(exclude_unset=True))
         return response.name
     except Exception as e:
         raise e

@@ -1,14 +1,12 @@
 from pytalentsolution.model.tenant import Tenant
 from pytalentsolution.model.company import Company, CompanySize
 from pytalentsolution.model.client_event import ClientEvent
-from pytalentsolution.model.job import Job, EmploymentType
+from pytalentsolution.model.job import Job, EmploymentType, CustomAttributes
 from pytalentsolution.model.job_search import JobQuery, RequestMetadata
 from pytalentsolution.crud.tenant import create_tenant, get_tenant, delete_tenant, update_tenant
 from pytalentsolution.crud.company import create_company, get_company, update_company, delete_company
 from pytalentsolution.crud.job import create_job, get_job, update_job, delete_job, search_jobs
 from pytalentsolution.crud.client_event import create_client_event
-
-from pytalentsolution.model.company import CompanySize
 
 import unittest
 
@@ -68,8 +66,16 @@ class TestFlow(unittest.TestCase):
 
     def test_step_i(self):
         """ Update Job """
+        # import pdb; pdb.set_trace()
         job_obj.title = "worker"
         job_obj.employment_types = [EmploymentType.FULL_TIME]
+        custom_obj = CustomAttributes()
+        custom_obj.string_values = ["hello"]
+        custom_obj.filterable = True
+        custom_obj.keyword_searchable = True
+        print(custom_obj)
+        job_obj.custom_attributes["ping"] = custom_obj
+        print(job_obj)
         result = update_job(job=job_obj)
         self.assertIsNotNone(result, msg = "Update Job")
         result = get_job(job=job_obj)
