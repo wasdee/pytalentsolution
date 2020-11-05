@@ -1,18 +1,15 @@
 from typing import List, Optional, Union
 
 from google.cloud import talent
-from proto.marshal import marshal
+from google.cloud.talent_v4 import CompanySize, Location as CTS_Location
 from proto.marshal.collections import Repeated
 from pydantic import BaseModel, PrivateAttr, validator
-
-from google.cloud.talent_v4 import CompanySize
-from google.cloud.talent_v4 import Location as CTS_Location
-from google.cloud.talent_v4 import Company as CTS_Company
 
 from pytalentsolution import Tenant
 from pytalentsolution.cts import CTSModel
 
 client_company = talent.CompanyServiceClient()
+
 
 class LatLng(BaseModel):
     """
@@ -84,7 +81,6 @@ class DerivedInfo(BaseModel):
 #     GIANT = auto()
 
 class CompanyInCreate(CTSModel):
-
     display_name: str
     external_id: str
     size: Optional[CompanySize]
@@ -102,8 +98,10 @@ class CompanyInCreate(CTSModel):
             value = list(value)
         return value
 
+
 class CompanyInUpdate(CompanyInCreate):
     name: Optional[str]
+
 
 class CompanyInRetrieve(CompanyInUpdate):
     """ contain output-only field """
@@ -117,6 +115,7 @@ class CompanyInRetrieve(CompanyInUpdate):
             value = value._meta.parent.to_dict(value)
         return value
 
+
 class Company(CompanyInRetrieve):
     _tenant: Optional[Tenant] = PrivateAttr(None)
 
@@ -129,7 +128,8 @@ class Company(CompanyInRetrieve):
             self._tenant = tenant
 
         company = CompanyInCreate(**self.dict())
-        response = client_company.create_company(parent=self._tenant.name, company=company.dict(exclude_unset=True, exclude_none=True))
+        response = client_company.create_company(parent=self._tenant.name,
+                                                 company=company.dict(exclude_unset=True, exclude_none=True))
         out = CompanyInRetrieve.from_orm(response)
         self.update_from_pydantic(out)
 
@@ -155,4 +155,4 @@ class Company(CompanyInRetrieve):
             companies.append(company)
         return companies
 
-#TODO: add __all__
+# TODO: add __all__

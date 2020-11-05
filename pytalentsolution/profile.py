@@ -1,14 +1,11 @@
-
-
 from enum import auto
 from typing import Optional, List, Any
 
 from autoname import AutoName
 from pydantic import BaseModel
 
+from pytalentsolution import Location
 from pytalentsolution.job import DegreeType
-
-
 
 
 class ResumeType(AutoName):
@@ -46,10 +43,10 @@ class PersonName(BaseModel):
     """
     preferredName: Optional[str]
 
-    #Union field person_name can be only one of the following:
+    # Union field person_name can be only one of the following:
     formattedName: Optional[str]
     structuredName: Optional[PersonStructuredName]
-    #End of list of possible types for union field person_name.
+    # End of list of possible types for union field person_name.
 
 
 class ContactInfoUsage(AutoName):
@@ -86,10 +83,10 @@ class Address(BaseModel):
     usage: Optional[ContactInfoUsage]
     current: Optional[bool]
 
-    #Union field address can be only one of the following:
+    # Union field address can be only one of the following:
     unstructuredAddress: Optional[str]
     structuredAddress: Optional[PostalAddress]
-    #End of list of possible types for union field address
+    # End of list of possible types for union field address
 
 
 class Email(BaseModel):
@@ -166,7 +163,7 @@ class EmploymentRecord(BaseModel):
     isSelfEmployed: Optional[bool]
     isCurrent: Optional[bool]
 
-    #output
+    # output
     jobTitleSnippet: Optional[str]
     jobDescriptionSnippet: Optional[str]
     employerNameSnippet: Optional[str]
@@ -193,14 +190,14 @@ class EducationRecord(BaseModel):
     description: Optional[str]
     isCurrent: Optional[bool]
 
-    #output
+    # output
     schoolNameSnippet: Optional[str]
     degreeSnippet: Optional[str]
 
-    #Union field degree can be only one of the following:
+    # Union field degree can be only one of the following:
     degreeDescription: Optional[str]
     structuredDegree: Optional[Degree]
-    #End of list of possible types for union field degree.
+    # End of list of possible types for union field degree.
 
 
 class SkillProficiencyLevel(AutoName):
@@ -225,7 +222,7 @@ class Skill(BaseModel):
     level: Optional[SkillProficiencyLevel]
     context: Optional[str]
 
-    #output
+    # output
     skillNameSnippet: Optional[str]
 
 
@@ -241,7 +238,7 @@ class Activity(BaseModel):
     teamMembers: Optional[List[str]]
     skillsUsed: Optional[List[Skill]]
 
-    #output
+    # output
     activityNameSnippet: Optional[str]
     activityDescriptionSnippet: Optional[str]
     skillsUsedSnippet: Optional[List[str]]
@@ -337,7 +334,7 @@ class Profile(BaseModel):
     patents: Optional[List[Patent]]
     certifications: Optional[List[Certification]]
 
-    #output only
+    # output only
     applications: Optional[List[str]]
     assignments: Optional[List[str]]
     customAttributes: Optional[Any]

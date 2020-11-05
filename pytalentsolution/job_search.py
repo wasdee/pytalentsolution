@@ -236,3 +236,5 @@ class SearchJobsRequest(BaseModel):
     diversification_level: Optional[DiversificationLevel]
     custom_ranking_info: Optional[CustomRankingInfo]
     disable_keyword_match: Optional[bool]
+
+# TODO: add __all__

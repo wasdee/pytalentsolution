@@ -1,8 +1,7 @@
-from typing import Optional, List
+from typing import Optional
 
-from autoname import AutoName
 from google.cloud import talent
-from pydantic import BaseModel, constr, PrivateAttr
+from pydantic import constr, PrivateAttr
 
 from pytalentsolution import settings
 from pytalentsolution.cts import CTSModel

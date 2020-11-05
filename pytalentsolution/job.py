@@ -1,24 +1,15 @@
 from datetime import datetime
-from typing import List, Literal, Optional, Dict, TYPE_CHECKING, Union
+from typing import Dict, List, Literal, Optional, TYPE_CHECKING, Union
 
 from google.cloud import talent
+from google.cloud.talent import (CompensationInfo as CTS_CompensationInfo, DegreeType, EmploymentType, HtmlSanitization,
+                                 JobBenefit, JobCategory, JobLevel, PostingRegion, Visibility)
 from pydantic import BaseModel, Field
 
-from google.cloud.talent import (
-    JobBenefit,
-    EmploymentType,
-    DegreeType,
-    JobLevel,
-    PostingRegion,
-    Visibility,
-    JobCategory,
-    HtmlSanitization,
-    CompensationInfo as CTS_CompensationInfo,
-)
 # from google.cloud.talent_v4 import CustomAttribute as CTS_CustomAttributes
 # from google.cloud.talent_v4.types.common import CustomAttribute as CTS_CustomAttributes
 # from google.cloud.talent_v4beta1.types import CustomAttribute as CTS_CustomAttributes
-from pytalentsolution import Company, CTSModel, Location, PrivateAttr, Tenant
+from pytalentsolution import CTSModel, Location, PrivateAttr, Tenant
 
 if TYPE_CHECKING:
     from pytalentsolution.job_search import JobQuery, RequestMetadata
@@ -361,7 +352,7 @@ class Job(JobInRetrieve):
                                            request_metadata=request_metadata.dict(exclude_unset=True),
                                            job_query=job_query.dict(exclude_unset=True))
         response = client_job.search_jobs(request=request)
-        return response
+        return cls.proto_to_dict(response)
 
 # def search_job_auto_complete():
 #     """
