@@ -1,4 +1,4 @@
-from pytalentsolution.model.job import CustomAttributes, Job
+from pytalentsolution.job import CustomAttributes, Job
 
 
 def test_job_with_custom_attribute():
@@ -15,4 +15,3 @@ def test_job_with_custom_attribute():
             }
     )
     job.prepare_for_rpc()
-    print(job)

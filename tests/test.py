@@ -1,12 +1,10 @@
 from pytalentsolution.model.tenant import Tenant
 from pytalentsolution.model.company import Company, CompanySize
-from pytalentsolution.model.client_event import ClientEvent
-from pytalentsolution.model.job import Job, EmploymentType, CustomAttributes
+from pytalentsolution.job import Job, EmploymentType, CustomAttributes
 from pytalentsolution.model.job_search import JobQuery, RequestMetadata
 from pytalentsolution.crud.tenant import create_tenant, get_tenant, delete_tenant, update_tenant
 from pytalentsolution.crud.company import create_company, get_company, update_company, delete_company
 from pytalentsolution.crud.job import create_job, get_job, update_job, delete_job, search_jobs
-from pytalentsolution.crud.client_event import create_client_event
 
 import unittest
 
