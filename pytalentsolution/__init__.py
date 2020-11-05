@@ -1,3 +1,6 @@
-from decouple import config
+from pytalentsolution.config import settings
+from .tenant import *
 
-project_id = config("PROJECT_ID", default="GOOGLE_PROJECT_ID")
+set_projectId = settings.set_projectId
+
+__all__ = ["Tenant"]

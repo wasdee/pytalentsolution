@@ -4,8 +4,8 @@ from typing import List, Optional
 from pydantic import BaseModel
 
 from pytalentsolution.model.company import LatLng
-from pytalentsolution.model.job import Money, JobCategory, EmploymentType, CompensationRange
-from pytalentsolution.model.enum_util import AutoName
+from pytalentsolution.models.job import JobCategory, EmploymentType, CompensationRange
+from pytalentsolution.models.enum_util import AutoName
 
 from google.cloud.talent_v4 import CommuteMethod, JobView
 class SearchMode(AutoName):

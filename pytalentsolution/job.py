@@ -1,9 +1,6 @@
-from enum import auto
 from typing import List, Optional, Dict, Union
 
 from pydantic import BaseModel
-
-from pytalentsolution.model.enum_util import AutoName
 
 from pytalentsolution.model.company import Location
 

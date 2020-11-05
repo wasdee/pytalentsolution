@@ -3,7 +3,7 @@ from typing import Optional, List
 
 from pydantic import BaseModel
 
-from pytalentsolution.model.enum_util import AutoName
+from pytalentsolution.models.enum_util import AutoName
 
 
 class JobEventType(AutoName):

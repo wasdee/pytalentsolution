@@ -1,12 +1,9 @@
-from enum import auto
 from typing import List, Optional
 
 from pydantic import BaseModel
 
 from google.cloud.talent_v4 import CompanySize
 from google.cloud.talent_v4 import Location as CTS_Location
-
-from pytalentsolution.model.enum_util import AutoName
 
 
 class LatLng(BaseModel):
