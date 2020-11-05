@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pytalentsolution"
-version = "0.2.2"
+version = "0.2.7"
 description = ""
 authors = ["Nutchanon Ninyawee <me@nutchanon.org>"]
 license = "ISC"
@@ -8,8 +8,13 @@ license = "ISC"
 [tool.poetry.dependencies]
 python = "^3.8"
 pydantic = "^1.5.1"
+google-cloud-talent = "^2.0.0"
+autoname = "^0.1.2"
+python-dotenv = "^0.15.0"
+PyPika = "^0.43.0"
 
 [tool.poetry.dev-dependencies]
+pytest = "^6.1.2"
 
 [build-system]
 requires = ["poetry>=0.12"]
