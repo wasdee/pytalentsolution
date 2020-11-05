@@ -9,7 +9,8 @@ license = "ISC"
 python = "^3.8"
 pydantic = "^1.5.1"
 google-cloud-talent = "^2.0.0"
-python-decouple = "^3.3"
+autoname = "^0.1.2"
+python-dotenv = "^0.15.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.1.2"
