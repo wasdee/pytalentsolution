@@ -56,9 +56,9 @@ class Tenant(TenantInCreate):
     @classmethod
     def list(cls):
         return [
-            cls.from_orm(response)
+            cls(**cls.proto_to_dict(response))
             for response
-            in client_tenant.list_tenants(parent=cls._parent)
+            in client_tenant.list_tenants(parent=f"projects/{settings.project_id}")
         ]
 
 

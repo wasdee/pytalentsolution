@@ -33,7 +33,7 @@ def test_job_with_custom_attr(tenant, company):
     job_query_obj = JobQuery(query="worker")
     request_metadata_obj = RequestMetadata(domain="pytalentsolution", session_id="1", user_id="tester")
     result = Job.search_jobs(tenant=tenant, job_query=job_query_obj, request_metadata=request_metadata_obj)
-    assert result.matching_jobs is not None
+    assert result['matching_jobs'] is not None
 
     j.delete()
 
