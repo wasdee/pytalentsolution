@@ -1,10 +1,18 @@
-from typing import List, Optional
+from typing import List, Optional, Union
 
-from pydantic import BaseModel
+from google.cloud import talent
+from proto.marshal import marshal
+from proto.marshal.collections import Repeated
+from pydantic import BaseModel, PrivateAttr, validator
 
 from google.cloud.talent_v4 import CompanySize
 from google.cloud.talent_v4 import Location as CTS_Location
+from google.cloud.talent_v4 import Company as CTS_Company
 
+from pytalentsolution import Tenant
+from pytalentsolution.cts import CTSModel
+
+client_company = talent.CompanyServiceClient()
 
 class LatLng(BaseModel):
     """
@@ -75,9 +83,8 @@ class DerivedInfo(BaseModel):
 #     BIGGER = auto()
 #     GIANT = auto()
 
+class CompanyInCreate(CTSModel):
 
-class Company(BaseModel):
-    name: Optional[str]
     display_name: str
     external_id: str
     size: Optional[CompanySize]
@@ -89,6 +96,63 @@ class Company(BaseModel):
     image_uri: Optional[str]
     keyword_searchable_job_custom_attributes: Optional[List[str]]
 
-    # output
-    derived_info: Optional[DerivedInfo]
+    @validator("keyword_searchable_job_custom_attributes", pre=True)
+    def convert_to_python_list(cls, value):
+        if isinstance(value, Repeated):
+            value = list(value)
+        return value
+
+class CompanyInUpdate(CompanyInCreate):
+    name: Optional[str]
+
+class CompanyInRetrieve(CompanyInUpdate):
+    """ contain output-only field """
+    derived_info: Optional[Union[DerivedInfo]]
     suspended: Optional[bool]
+
+    @validator("derived_info", pre=True)
+    def convert_to_python_dict(cls, value):
+        if not isinstance(value, dict):
+            # WTF: metaclass
+            value = value._meta.parent.to_dict(value)
+        return value
+
+class Company(CompanyInRetrieve):
+    _tenant: Optional[Tenant] = PrivateAttr(None)
+
+    def create(self, tenant: Optional[Tenant] = None):
+        """
+           Create Company
+           https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/projects.tenants.companies/create
+        """
+        if tenant:
+            self._tenant = tenant
+
+        company = CompanyInCreate(**self.dict())
+        response = client_company.create_company(parent=self._tenant.name, company=company.dict(exclude_unset=True, exclude_none=True))
+        out = CompanyInRetrieve.from_orm(response)
+        self.update_from_pydantic(out)
+
+    @classmethod
+    def get(cls, name):
+        response = client_company.get_company(name=name)
+        return cls.from_orm(response)
+
+    def update(self):
+        company = CompanyInUpdate(**self.dict())
+        _ = client_company.update_company(company=company.dict(exclude_unset=True, exclude_none=True))
+
+    def delete(self):
+        client_company.delete_company(name=self.name)
+        self.name = None
+
+    @classmethod
+    def list(cls, tenant: Tenant):
+        companies = []
+        for response in client_company.list_companies(parent=tenant.name):
+            company = cls.from_orm(response)
+            company._tenant = tenant
+            companies.append(company)
+        return companies
+
+#TODO: add __all__

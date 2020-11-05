@@ -1,13 +1,15 @@
 from enum import auto
 from typing import List, Optional
 
+from autoname import AutoName
 from pydantic import BaseModel
 
-from pytalentsolution.model.company import LatLng
-from pytalentsolution.models.job import JobCategory, EmploymentType, CompensationRange
-from pytalentsolution.models.enum_util import AutoName
+from pytalentsolution import LatLng
+from pytalentsolution.job import JobCategory, EmploymentType, CompensationRange
 
 from google.cloud.talent_v4 import CommuteMethod, JobView
+
+
 class SearchMode(AutoName):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/SearchMode
@@ -15,6 +17,7 @@ class SearchMode(AutoName):
     JOB_BENEFIT_UNSPECIFIED = auto()
     JOB_SEARCH = auto()
     FEATURED_JOB_SEARCH = auto()
+
 
 class DeviceType(AutoName):
     """
@@ -28,22 +31,25 @@ class DeviceType(AutoName):
     BOT = auto()
     OTHER = auto()
 
+
 class DeviceInfo(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/RequestMetadata#DeviceInfo
     """
-    device_type : Optional[DeviceType]
-    id : Optional[str]
+    device_type: Optional[DeviceType]
+    id: Optional[str]
+
 
 class RequestMetadata(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/RequestMetadata
     """
-    domain : str
-    session_id : str
-    user_id : str
-    allow_missing_ids : Optional[bool]
-    device_info : Optional[DeviceInfo]
+    domain: str
+    session_id: str
+    user_id: str
+    allow_missing_ids: Optional[bool]
+    device_info: Optional[DeviceInfo]
+
 
 # class CommuteMethod(AutoName):
 #     """
@@ -61,35 +67,39 @@ class RoadTraffic(AutoName):
     TRAFFIC_FREE = auto()
     BUSY_HOUR = auto()
 
+
 class TimeOfDay(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/JobQuery#TimeOfDay
     """
-    hours : Optional[int]
-    minutes : Optional[int]
-    seconds : Optional[int]
-    nanos : Optional[int]
+    hours: Optional[int]
+    minutes: Optional[int]
+    seconds: Optional[int]
+    nanos: Optional[int]
+
 
 class CommuteFilter(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/JobQuery#CommuteFilter
     """
-    commute_method : CommuteMethod
-    start_coordinates : LatLng
-    travel_duration : str
-    allow_imprecise_addresses : Optional[bool]
-    road_traffic : Optional[RoadTraffic]
-    departure_time : Optional[TimeOfDay] 
+    commute_method: CommuteMethod
+    start_coordinates: LatLng
+    travel_duration: str
+    allow_imprecise_addresses: Optional[bool]
+    road_traffic: Optional[RoadTraffic]
+    departure_time: Optional[TimeOfDay]
+
 
 class FilterType(AutoName):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/JobQuery#FilterType
     """
-    FILTER_TYPE_UNSPECIFIED  = auto()
+    FILTER_TYPE_UNSPECIFIED = auto()
     UNIT_ONLY = auto()
     UNIT_AND_AMOUNT = auto()
     ANNUALIZED_BASE_AMOUNT = auto()
     ANNUALIZED_TOTAL_AMOUNT = auto()
+
 
 class CompesationUnit(AutoName):
     """
@@ -104,39 +114,43 @@ class CompesationUnit(AutoName):
     ONE_TIME = auto()
     OTHER_COMPENSATION_UNIT = auto()
 
+
 class CompensationFilter(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/JobQuery#CompensationFilter
     """
-    type : FilterType
-    units : List[CompesationUnit]
-    range : Optional[CompensationRange]
-    include_jobs_with_unspecified_compensation_range : Optional[bool]
+    type: FilterType
+    units: List[CompesationUnit]
+    range: Optional[CompensationRange]
+    include_jobs_with_unspecified_compensation_range: Optional[bool]
+
 
 class TimestampRange(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/JobQuery#TimestampRange
     """
-    start_time : Optional[str]
-    end_time : Optional[str]
+    start_time: Optional[str]
+    end_time: Optional[str]
+
 
 class JobQuery(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/JobQuery
     """
-    query : str
-    query_language_code : Optional[str]
-    companies : Optional[List[str]]
-    job_categories : Optional[List[JobCategory]]
-    commute_filter : Optional[CommuteFilter]
-    company_display_name : Optional[List]
-    compensation_filter : Optional[CompensationFilter]
-    custom_attribute_filter : Optional[str]
-    disable_spell_check : Optional[bool]
-    employment_types : Optional[List[EmploymentType]]
-    language_codes : Optional[List[str]]
-    publish_time_range : Optional[TimestampRange]
-    excluded_jobs : Optional[List[str]]
+    query: str
+    query_language_code: Optional[str]
+    companies: Optional[List[str]]
+    job_categories: Optional[List[JobCategory]]
+    commute_filter: Optional[CommuteFilter]
+    company_display_name: Optional[List]
+    compensation_filter: Optional[CompensationFilter]
+    custom_attribute_filter: Optional[str]
+    disable_spell_check: Optional[bool]
+    employment_types: Optional[List[EmploymentType]]
+    language_codes: Optional[List[str]]
+    publish_time_range: Optional[TimestampRange]
+    excluded_jobs: Optional[List[str]]
+
 
 class TelecommutePreference(AutoName):
     """
@@ -146,21 +160,24 @@ class TelecommutePreference(AutoName):
     TELECOMMUTE_EXCLUDED = auto()
     TELECOMMUTE_ALLOWED = auto()
 
+
 class LocationFilter(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/JobQuery#LocationFilter
     """
-    address : Optional[str]
-    region_code : Optional[str]
-    lat_lng : Optional[LatLng]
-    distance_in_miles : Optional[int]
-    telecommute_preference : Optional[TelecommutePreference]
+    address: Optional[str]
+    region_code: Optional[str]
+    lat_lng: Optional[LatLng]
+    distance_in_miles: Optional[int]
+    telecommute_preference: Optional[TelecommutePreference]
+
 
 class HistogramQuery(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/HistogramQuery
     """
-    histogram_query : Optional[str]
+    histogram_query: Optional[str]
+
 
 # class JobView(AutoName):
 #     """
@@ -180,6 +197,7 @@ class DiversificationLevel(AutoName):
     DISABLED = auto()
     SIMPLE = auto()
 
+
 class ImportanceLevel(AutoName):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/CustomRankingInfo#ImportanceLevel
@@ -192,27 +210,29 @@ class ImportanceLevel(AutoName):
     HIGH = auto()
     EXTREME = auto()
 
+
 class CustomRankingInfo(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/CustomRankingInfo
     """
-    importance_level : ImportanceLevel
-    ranking_expression : str
+    importance_level: ImportanceLevel
+    ranking_expression: str
+
 
 class SearchJobsRequest(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/projects.tenants.jobs/search
     """
-    search_mode : Optional[SearchMode]
-    request_metada : RequestMetadata
-    job_query : Optional[JobQuery]
-    enable_broadening : Optional[bool]
-    histogram_queries : Optional[List[HistogramQuery]]
-    job_view : Optional[JobView]
-    offset : Optional[int]
-    max_page_size : Optional[int]
-    page_token : Optional[str]
-    order_by : Optional[str]
-    diversification_level : Optional[DiversificationLevel]
-    custom_ranking_info : Optional[CustomRankingInfo]
-    disable_keyword_match : Optional[bool]
+    search_mode: Optional[SearchMode]
+    request_metada: RequestMetadata
+    job_query: Optional[JobQuery]
+    enable_broadening: Optional[bool]
+    histogram_queries: Optional[List[HistogramQuery]]
+    job_view: Optional[JobView]
+    offset: Optional[int]
+    max_page_size: Optional[int]
+    page_token: Optional[str]
+    order_by: Optional[str]
+    diversification_level: Optional[DiversificationLevel]
+    custom_ranking_info: Optional[CustomRankingInfo]
+    disable_keyword_match: Optional[bool]

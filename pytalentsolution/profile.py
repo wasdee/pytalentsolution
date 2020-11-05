@@ -3,9 +3,9 @@
 from enum import auto
 from typing import Optional, List, Any
 
+from autoname import AutoName
 from pydantic import BaseModel
 
-from pytalentsolution.model.company import AutoName
 from pytalentsolution.job import DegreeType
 
 

@@ -1,13 +1,11 @@
 from pytalentsolution.model.tenant import Tenant 
-from pytalentsolution.model.company import Company 
-from pytalentsolution.model.job import Job
+from pytalentsolution.model.company import Company
 from pytalentsolution.model.client_event import ClientEvent
-from pytalentsolution.model.job_search import SearchJobsRequest, JobQuery, RequestMetadata
 from pytalentsolution import project_id
 
 from google.cloud import talent
 
-client_event = talent.EventServiceClient()
+
 
 def create_client_event(tenant : Tenant, event : ClientEvent):
     """

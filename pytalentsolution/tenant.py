@@ -2,9 +2,10 @@ from typing import Optional, List
 
 from autoname import AutoName
 from google.cloud import talent
-from pydantic import BaseModel, constr
+from pydantic import BaseModel, constr, PrivateAttr
 
 from pytalentsolution import settings
+from pytalentsolution.cts import CTSModel
 
 client_tenant = talent.TenantServiceClient()
 
@@ -18,7 +19,7 @@ client_tenant = talent.TenantServiceClient()
 #     AGGREGATED = auto()
 #     ISOLATED = auto()
 
-class TenantInCreate(BaseModel):
+class TenantInCreate(CTSModel):
     """
         https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.tenants
     """
@@ -31,12 +32,9 @@ class TenantInCreate(BaseModel):
 
 
 class Tenant(TenantInCreate):
-    _parent = f"projects/{settings.project_id}"
+    _parent = PrivateAttr(f"projects/{settings.project_id}")
 
     name: Optional[str] = None  # project/project_id/tenant/tenant_id, You will receive it when tenant has been created.
-
-    class Config:
-        orm_mode = True
 
     def create(self):
         tenant = talent.Tenant(**self.dict())
@@ -58,7 +56,11 @@ class Tenant(TenantInCreate):
 
     @classmethod
     def list(cls):
-        return [cls.from_orm(response) for response in client_tenant.list_tenants(parent=cls._parent)]
+        return [
+            cls.from_orm(response)
+            for response
+            in client_tenant.list_tenants(parent=cls._parent)
+        ]
 
 
 __all__ = ["Tenant"]
