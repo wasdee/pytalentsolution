@@ -3,7 +3,7 @@ from typing import Dict, List, Literal, Optional, TYPE_CHECKING, Union
 
 from google.cloud import talent
 from google.cloud.talent import (CompensationInfo as CTS_CompensationInfo, DegreeType, EmploymentType, HtmlSanitization,
-                                 JobBenefit, JobCategory, JobLevel, PostingRegion, Visibility)
+                                 JobBenefit, JobCategory, JobLevel, JobView, PostingRegion, Visibility, SearchJobsRequest as CTS_SearchJobsRequest)
 from pydantic import BaseModel, Field
 
 # from google.cloud.talent_v4 import CustomAttribute as CTS_CustomAttributes
@@ -13,7 +13,6 @@ from pytalentsolution import CTSModel, Location, PrivateAttr, Tenant
 
 if TYPE_CHECKING:
     from pytalentsolution.job_search import JobQuery, RequestMetadata
-
 
 class ApplicationInfo(BaseModel):
     """
@@ -340,7 +339,15 @@ class Job(JobInRetrieve):
         return jobs
 
     @classmethod
-    def search_jobs(cls, tenant: Tenant, job_query: "JobQuery", request_metadata: "RequestMetadata"):
+    def search_jobs(
+                    cls, 
+                    tenant: Tenant, 
+                    job_query: "JobQuery", 
+                    request_metadata: "RequestMetadata",
+                    job_view : JobView = JobView.JOB_VIEW_ID_ONLY,
+                    search_mode : CTS_SearchJobsRequest.SearchMode = CTS_SearchJobsRequest.SearchMode.JOB_SEARCH,
+                    max_page_size : int = 50,
+                    ):
         """
         https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/projects.tenants.jobs/search
 
@@ -350,8 +357,12 @@ class Job(JobInRetrieve):
 
         request = talent.SearchJobsRequest(parent=tenant.name,
                                            request_metadata=request_metadata.dict(exclude_unset=True),
-                                           job_query=job_query.dict(exclude_unset=True))
+                                           job_query=job_query.dict(exclude_unset=True),
+                                           job_view=job_view,
+                                           search_mode=search_mode,
+                                           max_page_size=max_page_size)
         response = client_job.search_jobs(request=request)
+
         return cls.proto_to_dict(response)
 
 # def search_job_auto_complete():

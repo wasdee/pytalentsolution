@@ -11,17 +11,18 @@ from pytalentsolution.job import JobCategory, EmploymentType, CompensationRange
 from google.cloud.talent_v4 import (
                                     CommuteMethod, 
                                     JobView, 
-                                    LocationFilter as CTS_LocationFilter
+                                    LocationFilter as CTS_LocationFilter,
+                                    SearchJobsRequest as CTS_SearchJobsRequest
                                     )
 
 
-class SearchMode(AutoName):
-    """
-    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/SearchMode
-    """
-    JOB_BENEFIT_UNSPECIFIED = auto()
-    JOB_SEARCH = auto()
-    FEATURED_JOB_SEARCH = auto()
+# class SearchMode(AutoName):
+#     """
+#     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/SearchMode
+#     """
+#     JOB_BENEFIT_UNSPECIFIED = auto()
+#     JOB_SEARCH = auto()
+#     FEATURED_JOB_SEARCH = auto()
 
 
 class DeviceType(AutoName):
@@ -251,7 +252,7 @@ class SearchJobsRequest(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/projects.tenants.jobs/search
     """
-    search_mode: Optional[SearchMode]
+    search_mode: Optional[CTS_SearchJobsRequest.SearchMode]
     request_metada: RequestMetadata
     job_query: Optional[JobQuery]
     enable_broadening: Optional[bool]
