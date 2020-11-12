@@ -266,7 +266,7 @@ class Job(JobInRetrieve):
         """
         if tenant:
             self._tenant = tenant
-
+        
         job = JobInCreate(**self.dict())
         # job = job.dict(exclude_unset=True, exclude_none=True)
         job = job.prepare_for_rpc().dict(exclude_unset=True, exclude_none=True)
@@ -346,7 +346,8 @@ class Job(JobInRetrieve):
                     request_metadata: "RequestMetadata",
                     job_view : JobView = JobView.JOB_VIEW_ID_ONLY,
                     search_mode : CTS_SearchJobsRequest.SearchMode = CTS_SearchJobsRequest.SearchMode.JOB_SEARCH,
-                    max_page_size : int = 50,
+                    max_page_size : int = 5,
+                    next_page_token : str = None
                     ):
         """
         https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/projects.tenants.jobs/search
@@ -354,16 +355,27 @@ class Job(JobInRetrieve):
         Returns:
             response (SearchJobResponse) : iterator
         """
+        if next_page_token:
+            request = talent.SearchJobsRequest(parent=tenant.name,
+                                            request_metadata=request_metadata.dict(exclude_unset=True),
+                                            job_query=job_query.dict(exclude_unset=True),
+                                            job_view=job_view,
+                                            search_mode=search_mode,
+                                            max_page_size=max_page_size,
+                                            page_token=next_page_token)
+            response = client_job.search_jobs(request=request)
 
-        request = talent.SearchJobsRequest(parent=tenant.name,
-                                           request_metadata=request_metadata.dict(exclude_unset=True),
-                                           job_query=job_query.dict(exclude_unset=True),
-                                           job_view=job_view,
-                                           search_mode=search_mode,
-                                           max_page_size=max_page_size)
-        response = client_job.search_jobs(request=request)
+            return cls.proto_to_dict(response)
+        else: 
+            request = talent.SearchJobsRequest(parent=tenant.name,
+                                            request_metadata=request_metadata.dict(exclude_unset=True),
+                                            job_query=job_query.dict(exclude_unset=True),
+                                            job_view=job_view,
+                                            search_mode=search_mode,
+                                            max_page_size=max_page_size)
+            response = client_job.search_jobs(request=request)
 
-        return cls.proto_to_dict(response)
+            return cls.proto_to_dict(response)            
 
 # def search_job_auto_complete():
 #     """

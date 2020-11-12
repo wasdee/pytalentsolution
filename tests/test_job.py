@@ -1,4 +1,5 @@
 from uuid import uuid4
+from google.api_core.exceptions import InvalidArgument
 
 from pytalentsolution import (
                                 CustomAttributes, 
@@ -72,7 +73,7 @@ def test_job_with_custom_attr(tenant, company):
                         keyword_searchable=True
                 )
             },
-            addresses=["333/99 Moo 9, Pattaya Beach Road, South Pattaya, Chonburi, Thailand, 20150"],
+            addresses=["333/99 Moo 9, Pattaya Beach Road, North Pattaya, Chonburi, Thailand, 20150"],
             language_code="en-US",
             compensation_info=CompensationInfo(
                 entries=[
@@ -130,6 +131,7 @@ def test_job_with_custom_attr(tenant, company):
             employment_types = [EmploymentType.PART_TIME],
             degree_types=[DegreeType.BACHELORS_OR_EQUIVALENT],
             )
+
     j4.create(tenant=tenant)
     j.create(tenant=tenant)
     j3.create(tenant=tenant)
@@ -213,10 +215,60 @@ def test_job_with_custom_attr(tenant, company):
                         )
 
     request_metadata_obj = RequestMetadata(domain="pytalentsolution", session_id="2", user_id="tester_2")
-    result = Job.search_jobs(tenant=tenant, job_query=job_query_obj, request_metadata=request_metadata_obj)
-
+    result = Job.search_jobs(tenant=tenant, job_query=job_query_obj, request_metadata=request_metadata_obj, max_page_size=2)
+    if result['next_page_token']:
+        next_result = Job.search_jobs(tenant=tenant, job_query=job_query_obj,next_page_token=result['next_page_token'],request_metadata=request_metadata_obj, max_page_size=2)
+        assert next_result is not None
+        assert 'next_page_token' not in next_result.keys()  
     assert result['matching_jobs'] is not None
 
     j.delete()
     j3.delete()
     j4.delete()
+
+
+def test_job_with_fail_error(tenant, company):
+    j = Job(
+            company=company.name,
+            requisition_id=uuid4().hex,
+            title="engineer",
+            description="implement system",
+            custom_attributes={
+                "tags": CustomAttributes(
+                        string_values=["hello"],
+                        filterable=True,
+                        keyword_searchable=True
+                ),
+                "min_exp": CustomAttributes(
+                        long_values=[20],
+                        filterable=True,
+                        keyword_searchable=True
+                )
+            },
+            addresses=["12/12-23 dodo street"],
+            language_code="en-US",
+            compensation_info=CompensationInfo(
+                entries=[
+                    CompensationEntry(
+                        unit=CTS_CompensationInfo.CompensationUnit.MONTHLY,
+                        range_=CompensationRange(
+                            min_compensation=Money(
+                                currency_code="THB", units=20000
+                                ),
+                            max_compensation=Money(
+                                currency_code="THB", units=30000
+                                )
+                            ),
+                        ),
+                        ]
+                    ),
+            degree_types=[DegreeType.BACHELORS_OR_EQUIVALENT],
+            )
+
+    try:
+        import pdb; pdb.set_trace()
+        x = j.create(tenant=tenant)
+        print(x)
+        j.delete()
+    except InvalidArgument:
+        print("job fail error")
