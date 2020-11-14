@@ -346,7 +346,8 @@ class Job(JobInRetrieve):
                     request_metadata: "RequestMetadata",
                     job_view : JobView = JobView.JOB_VIEW_ID_ONLY,
                     search_mode : CTS_SearchJobsRequest.SearchMode = CTS_SearchJobsRequest.SearchMode.JOB_SEARCH,
-                    max_page_size : int = 5,
+                    max_page_size : int = 9,
+                    offset : int = 0,
                     next_page_token : str = None
                     ):
         """
@@ -355,6 +356,32 @@ class Job(JobInRetrieve):
         Returns:
             response (SearchJobResponse) : iterator
         """
+
+        if offset and next_page_token:
+            request = talent.SearchJobsRequest(parent=tenant.name,
+                                            request_metadata=request_metadata.dict(exclude_unset=True),
+                                            job_query=job_query.dict(exclude_unset=True),
+                                            job_view=job_view,
+                                            search_mode=search_mode,
+                                            max_page_size=max_page_size,
+                                            page_token=next_page_token,
+                                            offset=offset)
+            response = client_job.search_jobs(request=request)            
+
+            return cls.proto_to_dict(response)
+
+        if offset:
+            request = talent.SearchJobsRequest(parent=tenant.name,
+                                            request_metadata=request_metadata.dict(exclude_unset=True),
+                                            job_query=job_query.dict(exclude_unset=True),
+                                            job_view=job_view,
+                                            search_mode=search_mode,
+                                            max_page_size=max_page_size,
+                                            offset=offset)
+            response = client_job.search_jobs(request=request)            
+
+            return cls.proto_to_dict(response)
+
         if next_page_token:
             request = talent.SearchJobsRequest(parent=tenant.name,
                                             request_metadata=request_metadata.dict(exclude_unset=True),
@@ -365,17 +392,17 @@ class Job(JobInRetrieve):
                                             page_token=next_page_token)
             response = client_job.search_jobs(request=request)
 
-            return cls.proto_to_dict(response)
-        else: 
-            request = talent.SearchJobsRequest(parent=tenant.name,
-                                            request_metadata=request_metadata.dict(exclude_unset=True),
-                                            job_query=job_query.dict(exclude_unset=True),
-                                            job_view=job_view,
-                                            search_mode=search_mode,
-                                            max_page_size=max_page_size)
-            response = client_job.search_jobs(request=request)
+            return cls.proto_to_dict(response) 
 
-            return cls.proto_to_dict(response)            
+        request = talent.SearchJobsRequest(parent=tenant.name,
+                                        request_metadata=request_metadata.dict(exclude_unset=True),
+                                        job_query=job_query.dict(exclude_unset=True),
+                                        job_view=job_view,
+                                        search_mode=search_mode,
+                                        max_page_size=max_page_size)
+        response = client_job.search_jobs(request=request)
+
+        return cls.proto_to_dict(response)            
 
 # def search_job_auto_complete():
 #     """
