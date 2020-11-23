@@ -206,6 +206,9 @@ class CustomAttributes(BaseModel):
 
 
 class JobInCreate(CTSModel):
+    """
+    https://cloud.google.com/talent-solution/job-search/v4beta1/docs/reference/rest/v4beta1/projects.jobs#Job.FIELDS.responsibilities
+    """
     company: str
     requisition_id: str
     title: str
