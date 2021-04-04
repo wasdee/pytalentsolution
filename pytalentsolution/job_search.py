@@ -1,5 +1,5 @@
 from enum import auto
-from typing import List, Optional
+from typing import List, Optional, Union, Dict
 
 from autoname import AutoName
 from pydantic import BaseModel
@@ -7,16 +7,22 @@ from pydantic import BaseModel
 from pytalentsolution import LatLng
 from pytalentsolution.job import JobCategory, EmploymentType, CompensationRange
 
-from google.cloud.talent_v4 import CommuteMethod, JobView
+# from google.cloud import talent
+from google.cloud.talent_v4 import (
+                                    CommuteMethod, 
+                                    JobView, 
+                                    LocationFilter as CTS_LocationFilter,
+                                    SearchJobsRequest as CTS_SearchJobsRequest
+                                    )
 
 
-class SearchMode(AutoName):
-    """
-    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/SearchMode
-    """
-    JOB_BENEFIT_UNSPECIFIED = auto()
-    JOB_SEARCH = auto()
-    FEATURED_JOB_SEARCH = auto()
+# class SearchMode(AutoName):
+#     """
+#     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/SearchMode
+#     """
+#     JOB_BENEFIT_UNSPECIFIED = auto()
+#     JOB_SEARCH = auto()
+#     FEATURED_JOB_SEARCH = auto()
 
 
 class DeviceType(AutoName):
@@ -132,6 +138,35 @@ class TimestampRange(BaseModel):
     start_time: Optional[str]
     end_time: Optional[str]
 
+# class TelecommutePreference(AutoName):
+#     """
+#     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/JobQuery#TelecommutePreference
+#     """
+#     TELECOMMUTE_PREFERENCE_UNSPECIFIED = auto()
+#     TELECOMMUTE_EXCLUDED = auto()
+#     TELECOMMUTE_ALLOWED = auto()
+
+# class LocationFilter(BaseModel):
+#     """
+#     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/JobQuery#LocationFilter
+#     """
+#     address: Optional[str]
+#     region_code: Optional[str]
+#     lat_lng: Optional[LatLng]
+#     distance_in_miles: Optional[int]
+#     telecommute_preference: Optional[TelecommutePreference]
+
+# class LocationFilters(BaseModel):
+#     address: Optional[List[str]] = None
+#     region_code: Optional[List[str]] = None
+
+#     def to_protoMessage(self):
+#         obj = talent.LocationFilter()
+#         for location in self.location_filters:
+#             for k, v in location.dict(exclude_none=True).items():
+#                 setattr(obj, k, v)
+#             return obj
+
 
 class JobQuery(BaseModel):
     """
@@ -141,6 +176,8 @@ class JobQuery(BaseModel):
     query_language_code: Optional[str]
     companies: Optional[List[str]]
     job_categories: Optional[List[JobCategory]]
+    # location_filters : Optional[List[Union[LocationFilters, talent.LocationFilter]]]
+    location_filters : Optional[List[Dict]] #TODO: Will implement conform with SDK
     commute_filter: Optional[CommuteFilter]
     company_display_name: Optional[List]
     compensation_filter: Optional[CompensationFilter]
@@ -151,25 +188,17 @@ class JobQuery(BaseModel):
     publish_time_range: Optional[TimestampRange]
     excluded_jobs: Optional[List[str]]
 
+    # def prepare_for_rpc(self):
+    #     if self.location_filters:
+    #         import pdb; pdb.set_trace()
+    #         for location in self.location_filters:
+    #             for k, v in location.items():
+    #                 if isinstance(v, LocationFilters):
+    #                     self.location_filters[k] = v.to_protoMessage()
+    #         return self
 
-class TelecommutePreference(AutoName):
-    """
-    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/JobQuery#TelecommutePreference
-    """
-    TELECOMMUTE_PREFERENCE_UNSPECIFIED = auto()
-    TELECOMMUTE_EXCLUDED = auto()
-    TELECOMMUTE_ALLOWED = auto()
-
-
-class LocationFilter(BaseModel):
-    """
-    https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/JobQuery#LocationFilter
-    """
-    address: Optional[str]
-    region_code: Optional[str]
-    lat_lng: Optional[LatLng]
-    distance_in_miles: Optional[int]
-    telecommute_preference: Optional[TelecommutePreference]
+    # class Config:
+    #     arbitrary_types_allowed = True
 
 
 class HistogramQuery(BaseModel):
@@ -223,7 +252,7 @@ class SearchJobsRequest(BaseModel):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/projects.tenants.jobs/search
     """
-    search_mode: Optional[SearchMode]
+    search_mode: Optional[CTS_SearchJobsRequest.SearchMode]
     request_metada: RequestMetadata
     job_query: Optional[JobQuery]
     enable_broadening: Optional[bool]
