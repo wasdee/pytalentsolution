@@ -1,14 +1,14 @@
 from enum import auto
 from typing import Optional, List, Any
 
-from autoname import AutoName
+from fastapi_utils.enums import StrEnum
 from pydantic import BaseModel
 
 from pytalentsolution import Location
 from pytalentsolution.job import DegreeType
 
 
-class ResumeType(AutoName):
+class ResumeType(StrEnum):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.tenants.profiles#ResumeType
     """
@@ -49,7 +49,7 @@ class PersonName(BaseModel):
     # End of list of possible types for union field person_name.
 
 
-class ContactInfoUsage(AutoName):
+class ContactInfoUsage(StrEnum):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.tenants.profiles#ContactInfoUsage
     """
@@ -97,7 +97,7 @@ class Email(BaseModel):
     emailAddress: Optional[str]
 
 
-class PhoneType(AutoName):
+class PhoneType(StrEnum):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.tenants.profiles#PhoneType
     """
@@ -200,7 +200,7 @@ class EducationRecord(BaseModel):
     # End of list of possible types for union field degree.
 
 
-class SkillProficiencyLevel(AutoName):
+class SkillProficiencyLevel(StrEnum):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.tenants.profiles#SkillProficiencyLevel
     """
@@ -285,7 +285,7 @@ class Certification(BaseModel):
     description: Optional[str]
 
 
-class AvailabilitySignalType(AutoName):
+class AvailabilitySignalType(StrEnum):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.tenants.profiles#availabilitysignaltype
     """

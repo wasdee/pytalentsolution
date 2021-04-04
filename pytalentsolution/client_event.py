@@ -1,14 +1,14 @@
 from enum import auto
 from typing import Optional, List
 
-from autoname import AutoName
+from fastapi_utils.enums import StrEnum
 from google.cloud import talent
 from pydantic import BaseModel
 
 from pytalentsolution import Tenant
 
 
-class JobEventType(AutoName):
+class JobEventType(StrEnum):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/ClientEvent#JobEventType
     """
@@ -39,7 +39,7 @@ class JobEvent(BaseModel):
     profile: Optional[str]
 
 
-class ProfileEventType(AutoName):
+class ProfileEventType(StrEnum):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/ClientEvent#ProfileEventType
     """

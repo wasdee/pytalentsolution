@@ -65,7 +65,7 @@ class CompensationInfo(BaseModel):
     annualized_total_compensation_range: Optional[CompensationRange]
 
 
-# class DegreeType(AutoName):
+# class DegreeType(StrEnum):
 #     """
 #     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/DegreeType
 #     """
@@ -80,7 +80,7 @@ class CompensationInfo(BaseModel):
 #     DOCTORAL_OR_EQUIVALENT = auto()
 
 
-# class EmploymentType(AutoName):
+# class EmploymentType(StrEnum):
 #     """
 #     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.EmploymentType
 #     """
@@ -97,7 +97,7 @@ class CompensationInfo(BaseModel):
 #     OTHER_EMPLOYMENT_TYPE = auto()
 
 
-# class JobLevel(AutoName):
+# class JobLevel(StrEnum):
 #     """
 #     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.JobLevel
 #     """
@@ -109,7 +109,7 @@ class CompensationInfo(BaseModel):
 #     EXECUTIVE = auto()
 
 
-# class PostingRegion(AutoName):
+# class PostingRegion(StrEnum):
 #     """
 #     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.PostingRegion
 #     """
@@ -119,7 +119,7 @@ class CompensationInfo(BaseModel):
 #     TELECOMMUTE = auto()
 
 
-# class Visibility(AutoName):
+# class Visibility(StrEnum):
 #     """
 #     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.Visibility
 #     """
@@ -129,7 +129,7 @@ class CompensationInfo(BaseModel):
 #     SHARED_WITH_PUBLIC = auto()
 
 
-# class JobCategory(AutoName):
+# class JobCategory(StrEnum):
 #     """
 #     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.JobCategory
 #     """
@@ -174,7 +174,7 @@ class DerivedInfo(BaseModel):
     job_categories: Optional[List[JobCategory]]
 
 
-# class HtmlSanitization(AutoName):
+# class HtmlSanitization(StrEnum):
 #     """
 #     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.jobs#Job.HtmlSanitization
 #     """

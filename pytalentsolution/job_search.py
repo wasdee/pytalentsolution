@@ -1,7 +1,7 @@
 from enum import auto
 from typing import List, Optional, Union, Dict
 
-from autoname import AutoName
+from fastapi_utils.enums import StrEnum
 from pydantic import BaseModel
 
 from pytalentsolution import LatLng
@@ -16,7 +16,7 @@ from google.cloud.talent_v4 import (
                                     )
 
 
-# class SearchMode(AutoName):
+# class SearchMode(StrEnum):
 #     """
 #     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/SearchMode
 #     """
@@ -25,7 +25,7 @@ from google.cloud.talent_v4 import (
 #     FEATURED_JOB_SEARCH = auto()
 
 
-class DeviceType(AutoName):
+class DeviceType(StrEnum):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/RequestMetadata#DeviceType
     """
@@ -57,7 +57,7 @@ class RequestMetadata(BaseModel):
     device_info: Optional[DeviceInfo]
 
 
-# class CommuteMethod(AutoName):
+# class CommuteMethod(StrEnum):
 #     """
 #     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/JobQuery#CommuteMethod
 #     """
@@ -65,7 +65,7 @@ class RequestMetadata(BaseModel):
 #     DRIVING = auto()
 #     TRANSIT = auto()
 
-class RoadTraffic(AutoName):
+class RoadTraffic(StrEnum):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/JobQuery#RoadTraffic
     """
@@ -96,7 +96,7 @@ class CommuteFilter(BaseModel):
     departure_time: Optional[TimeOfDay]
 
 
-class FilterType(AutoName):
+class FilterType(StrEnum):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/JobQuery#FilterType
     """
@@ -107,7 +107,7 @@ class FilterType(AutoName):
     ANNUALIZED_TOTAL_AMOUNT = auto()
 
 
-class CompesationUnit(AutoName):
+class CompesationUnit(StrEnum):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/projects.tenants.jobs#CompensationUnit
     """
@@ -138,7 +138,7 @@ class TimestampRange(BaseModel):
     start_time: Optional[str]
     end_time: Optional[str]
 
-# class TelecommutePreference(AutoName):
+# class TelecommutePreference(StrEnum):
 #     """
 #     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/JobQuery#TelecommutePreference
 #     """
@@ -208,7 +208,7 @@ class HistogramQuery(BaseModel):
     histogram_query: Optional[str]
 
 
-# class JobView(AutoName):
+# class JobView(StrEnum):
 #     """
 #     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/JobView
 #     """
@@ -218,7 +218,7 @@ class HistogramQuery(BaseModel):
 #     JOB_VIEW_SMALL = auto()
 #     JOB_VIEW_FULL = auto()
 
-class DiversificationLevel(AutoName):
+class DiversificationLevel(StrEnum):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/DiversificationLevel
     """
@@ -227,7 +227,7 @@ class DiversificationLevel(AutoName):
     SIMPLE = auto()
 
 
-class ImportanceLevel(AutoName):
+class ImportanceLevel(StrEnum):
     """
     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4/CustomRankingInfo#ImportanceLevel
     """

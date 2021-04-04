@@ -36,7 +36,7 @@ class PostalAddress(BaseModel):
     organization: Optional[str]
 
 
-# class LocationType(AutoName):
+# class LocationType(StrEnum):
 #     LOCATION_TYPE_UNSPECIFIED = auto()
 #     COUNTRY = auto()
 #     ADMINISTRATIVE_AREA = auto()
@@ -67,7 +67,7 @@ class DerivedInfo(BaseModel):
     headquarters_location: Optional[Location]
 
 
-# class CompanySize(AutoName):
+# class CompanySize(StrEnum):
 #     """
 #     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.companies#companysize
 #     """

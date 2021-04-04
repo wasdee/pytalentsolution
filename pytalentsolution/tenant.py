@@ -10,7 +10,7 @@ client_tenant = talent.TenantServiceClient()
 
 
 # TODO: this is absent in `.venv/Lib/site-packages/google/cloud/talent_v4/types/tenant.py`
-# class DataUsageType(AutoName):
+# class DataUsageType(StrEnum):
 #     """
 #     https://cloud.google.com/talent-solution/job-search/docs/reference/rest/v4beta1/projects.tenants#DataUsageType
 #     """
