@@ -205,6 +205,9 @@ class CustomAttributes(BaseModel):
 
 
 class JobInCreate(CTSModel):
+    """
+    https://cloud.google.com/talent-solution/job-search/v4beta1/docs/reference/rest/v4beta1/projects.jobs#Job.FIELDS.responsibilities
+    """
     company: str
     requisition_id: str
     title: str
@@ -238,6 +241,50 @@ class JobInCreate(CTSModel):
                 if isinstance(v, CustomAttributes):
                     self.custom_attributes[k] = v.to_protoMessage()
         return self
+
+#####  START suggested changes - JobInCreate(CTSModel): ####
+# main changes are described below:
+class JobInCreate(CTSModel):
+    """Suggested change: make description: Optional[str]
+                         make qualifications and responsibilities required
+                         qualifications: str
+                         responsibilities: str
+    """
+    company: str
+    requisition_id: str
+    title: str
+    qualifications: str         # required
+    responsibilities: str       # required
+    addresses: Optional[List[str]]
+    application_info: Optional[ApplicationInfo]
+    job_benefits: Optional[JobBenefit]
+    compensation_info: Optional[CompensationInfo]
+    custom_attributes: Optional[Dict[str, Union[CustomAttributes, talent.CustomAttribute]]]
+    degree_types: Optional[List[DegreeType]]
+    department: Optional[str]
+    employment_types: Optional[List[EmploymentType]]
+    incentives: Optional[str]
+    language_code: Optional[str]
+    job_level: Optional[JobLevel]
+    promotion_value: Optional[int]
+    description: Optional[str]      # optional
+    posting_region: Optional[PostingRegion]
+    job_start_time: Optional[datetime]
+    job_end_time: Optional[datetime]
+    posting_publish_time: Optional[datetime]
+    posting_expire_time: Optional[datetime]
+
+    #---- This remains unchanged ------#
+    # deprecated
+    visibility: Optional[Visibility]
+
+    def prepare_for_rpc(self):
+        if self.custom_attributes:
+            for k, v in self.custom_attributes.items():
+                if isinstance(v, CustomAttributes):
+                    self.custom_attributes[k] = v.to_protoMessage()
+        return self
+#####  END suggested changes - JobInCreate(CTSModel): ####
 
 
 class JobInUpdate(JobInCreate):
